@@ -1,7 +1,7 @@
 # WeatherProject
 We can search current weather and temperature in any city
 
-Should be used config.js file before using because of protecting API_KEY
+Should be created config.js file before using this app on local to protect API_KEY
 
 //config.js
 
