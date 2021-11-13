@@ -40,10 +40,10 @@ app.post("/", function (req, res) {
           `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query}</h1>`
         );
         res.write(
-          `<h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;">The weather is currently ${weatherDescription}</h1>`
+          `<h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current weather: ${weatherDescription}</h1>`
         );
         res.write(
-          `<h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;">The temprature is ${temp} degrees Celcius.</h1>`
+          `<h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current temperature: ${temp} &#8451; </h1>`
         );
         res.write(
           `<img style="display: block;margin-left:auto;margin-right:auto;width:15%;" src=${imageURL}>`
