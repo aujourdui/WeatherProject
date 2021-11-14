@@ -39,15 +39,29 @@ app.post("/", function (req, res) {
         res.write(
           `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query}</h1>`
         );
+        // res.write(
+        //   `<img style="display: block;margin-left:auto;margin-right:auto;width:10%;" src=${imageURL}>`
+        // );
         res.write(
-          `<h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current weather: ${weatherDescription}</h1>`
+          `
+          <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;">
+            Current
+          </h1>
+          <div>
+          <hr style="border: 1px dotted gray;width:70%">
+            <h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-bottom:0;">
+              Weather: ${weatherDescription}
+            </h1>
+            <img style="display: block;margin-left:auto;margin-right:auto;width:10%;" src=${imageURL}>
+            <h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top:0;">
+              Temperature: ${temp} &#8451;
+            </h1>
+            <hr style="border: 1px dotted gray;width:70%">
+          </div>`
         );
-        res.write(
-          `<h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current temperature: ${temp} &#8451; </h1>`
-        );
-        res.write(
-          `<img style="display: block;margin-left:auto;margin-right:auto;width:15%;" src=${imageURL}>`
-        );
+        // res.write(
+        //   `<h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current temperature: ${temp} &#8451; </h1>`
+        // );
         res.write(
           `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
           <button type="submit"; name="button" style="font-size:1rem;background-color:#ECF87F;text-decoration:none;padding:10px 32px;border:none;cursor: pointer;">Home</button>
