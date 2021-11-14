@@ -25,6 +25,8 @@ app.post("/", function (req, res) {
   const unit = "metric";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
+  // const urlWeekly = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${query}&cnt={7}&appid=${apiKey}`;
+
   https.get(url, function (response) {
     // console.log(response.statusCode);
 
@@ -44,7 +46,7 @@ app.post("/", function (req, res) {
         // );
         res.write(
           `
-          <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;">
+          <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;color:#B91646;">
             Current
           </h1>
           <div>
@@ -59,9 +61,7 @@ app.post("/", function (req, res) {
             <hr style="border: 1px dotted gray;width:70%">
           </div>`
         );
-        // res.write(
-        //   `<h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;">Current temperature: ${temp} &#8451; </h1>`
-        // );
+
         res.write(
           `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
           <button type="submit"; name="button" style="font-size:1rem;background-color:#ECF87F;text-decoration:none;padding:10px 32px;border:none;cursor: pointer;">Home</button>
