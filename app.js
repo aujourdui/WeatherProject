@@ -29,12 +29,12 @@ app.post("/", function (req, res) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
       if (query === weatherData.name) {
-        var temp = weatherData.main.temp;
-        var maxTemp = weatherData.main.temp_max;
-        var minTemp = weatherData.main.temp_min;
-        var weatherDescription = weatherData.weather[0].description;
+        const temp = weatherData.main.temp;
+        const maxTemp = weatherData.main.temp_max;
+        const minTemp = weatherData.main.temp_min;
+        const weatherDescription = weatherData.weather[0].description;
         const icon = weatherData.weather[0].icon;
-        var imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+        const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
         res.write(
           `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query}</h1>`
