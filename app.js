@@ -83,7 +83,7 @@ app.post("/", function (req, res) {
         const lon = weatherData.coord.lon;
         const lat = weatherData.coord.lat;
 
-        const urlDaily = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=6ead27bdb26041ed3ea800802ff72381`;
+        const urlDaily = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`;
 
         // const urlDaily = `https://api.openweathermap.org/data/2.5/onecall?lat=49.2497&lon=-123.1193&units=${unit}&appid=6ead27bdb26041ed3ea800802ff72381`;
 
