@@ -29,7 +29,9 @@ app.post("/", function (req, res) {
   https.get(url, function (response) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
-      if (query == weatherData.name) {
+      const cityName = weatherData.name;
+
+      if (query === cityName) {
         const country = weatherData.sys.country;
         const temp = weatherData.main.temp.toFixed(1);
         const maxTemp = weatherData.main.temp_max.toFixed(1);
@@ -38,11 +40,8 @@ app.post("/", function (req, res) {
         const icon = weatherData.weather[0].icon;
         const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
-        // let fixHistoryRating = historyOfEverything.getAverageRating.toFixed(2)
-        // console.log(fixHistoryRating)
-
         res.write(
-          `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query} / ${country}</h1>`
+          `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${cityName} / ${country}</h1>`
         );
         res.write(
           `
