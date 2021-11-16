@@ -177,7 +177,7 @@ app.post("/", function (req, res) {
 
             const d = new Date();
 
-            const weekday = new Array(7);
+            const weekday = new Array(13);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
             weekday[2] = "(Tue)";
@@ -185,15 +185,24 @@ app.post("/", function (req, res) {
             weekday[4] = "(Thu)";
             weekday[5] = "(Fri)";
             weekday[6] = "(Sat)";
+            weekday[7] = weekday[0];
+            weekday[8] = weekday[1];
+            weekday[9] = weekday[2];
+            weekday[10] = weekday[3];
+            weekday[11] = weekday[4];
+            weekday[12] = weekday[5];
+            weekday[13] = weekday[6];
 
             // const dayOfWeek = weekday[d.getDay()];
-            const sunday = weekday[d.getDay() - 1];
-            const monday = weekday[d.getDay()];
-            const tuesday = weekday[d.getDay() + 1];
-            const wednesday = weekday[d.getDay() + 2];
-            const thursday = weekday[d.getDay() + 3];
-            const friday = weekday[d.getDay() + 4];
-            const saturday = weekday[d.getDay() + 5];
+            const dayOne = weekday[d.getDay()];
+            const dayTwo = weekday[d.getDay() + 1];
+            const dayThree = weekday[d.getDay() + 2];
+            const dayFour = weekday[d.getDay() + 3];
+            const dayFive = weekday[d.getDay() + 4];
+            const daySix = weekday[d.getDay() + 5];
+            const daySeven = weekday[d.getDay() + 6];
+
+            // var distance = (daytoset + 7 - currentDay) % 7;
 
             const month = currentDate.getMonth() + 1;
 
@@ -207,14 +216,14 @@ app.post("/", function (req, res) {
             const sevenDaysLater = sevenDatesLater.getDate() - 1;
 
             // console.log(`${month}-${day} ${hours}`);
-            const date = `${month}/${day}${monday}`;
-            const oneDayLaterDate = `${month}/${oneDayLater}${tuesday}`;
-            const twoDaysLaterDate = `${month}/${twoDaysLater}${wednesday}`;
-            const threeDaysLaterDate = `${month}/${threeDaysLater}${thursday}`;
-            const fourDaysLaterDate = `${month}/${fourDaysLater}${friday}`;
-            const fiveDaysLaterDate = `${month}/${fiveDaysLater}${saturday}`;
-            const sixDaysLaterDate = `${month}/${sixDaysLater}${sunday}`;
-            const sevenDaysLaterDate = `${month}/${sevenDaysLater}${monday}`;
+            const date = `${month}/${day}${dayOne}`;
+            const oneDayLaterDate = `${month}/${oneDayLater}${dayTwo}`;
+            const twoDaysLaterDate = `${month}/${twoDaysLater}${dayThree}`;
+            const threeDaysLaterDate = `${month}/${threeDaysLater}${dayFour}`;
+            const fourDaysLaterDate = `${month}/${fourDaysLater}${dayFive}`;
+            const fiveDaysLaterDate = `${month}/${fiveDaysLater}${daySix}`;
+            const sixDaysLaterDate = `${month}/${sixDaysLater}${daySeven}`;
+            const sevenDaysLaterDate = `${month}/${sevenDaysLater}${dayOne}`;
 
             res.write(
               `
