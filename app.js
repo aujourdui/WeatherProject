@@ -31,12 +31,15 @@ app.post("/", function (req, res) {
       const weatherData = JSON.parse(data);
       if (query == weatherData.name) {
         const country = weatherData.sys.country;
-        const temp = weatherData.main.temp;
-        const maxTemp = weatherData.main.temp_max;
-        const minTemp = weatherData.main.temp_min;
+        const temp = weatherData.main.temp.toFixed(1);
+        const maxTemp = weatherData.main.temp_max.toFixed(1);
+        const minTemp = weatherData.main.temp_min.toFixed(1);
         const weatherDescription = weatherData.weather[0].description;
         const icon = weatherData.weather[0].icon;
         const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+
+        // let fixHistoryRating = historyOfEverything.getAverageRating.toFixed(2)
+        // console.log(fixHistoryRating)
 
         res.write(
           `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query} / ${country}</h1>`
@@ -61,7 +64,7 @@ app.post("/", function (req, res) {
         res.write(
           `
           <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;margin-top: 3rem;color:#B91646;">
-            Temprerature detail
+            Temperature detail
           </h1>
           <div>
           <hr style="border: 1px solid gray;width:300px">
@@ -92,55 +95,67 @@ app.post("/", function (req, res) {
           response.on("data", (data) => (resultData += data));
           response.on("end", () => {
             const weatherData = JSON.parse(resultData);
-            const todayTempMin = weatherData.daily[0].temp.min;
-            const todayTempMax = weatherData.daily[0].temp.max;
+            const todayTempMin = weatherData.daily[0].temp.min.toFixed(1);
+            const todayTempMax = weatherData.daily[0].temp.max.toFixed(1);
             const todayWeatherDescription =
               weatherData.daily[0].weather[0].description;
             const todayWeatherIcon = weatherData.daily[0].weather[0].icon;
             const todayWeatherImageURL = `http://openweathermap.org/img/wn/${todayWeatherIcon}@2x.png`;
-            const oneDayLaterTempMin = weatherData.daily[1].temp.min;
-            const oneDayLaterTempMax = weatherData.daily[1].temp.max;
+            const oneDayLaterTempMin = weatherData.daily[1].temp.min.toFixed(1);
+            const oneDayLaterTempMax = weatherData.daily[1].temp.max.toFixed(1);
             const oneDayLaterWeatherDescription =
               weatherData.daily[1].weather[0].description;
             const oneDayLaterWeatherIcon = weatherData.daily[1].weather[0].icon;
             const oneDayLaterWeatherImageURL = `http://openweathermap.org/img/wn/${oneDayLaterWeatherIcon}@2x.png`;
-            const twoDaysLaterTempMin = weatherData.daily[2].temp.min;
-            const twoDaysLaterTempMax = weatherData.daily[2].temp.max;
+            const twoDaysLaterTempMin =
+              weatherData.daily[2].temp.min.toFixed(1);
+            const twoDaysLaterTempMax =
+              weatherData.daily[2].temp.max.toFixed(1);
             const twoDaysLaterWeatherDescription =
               weatherData.daily[2].weather[0].description;
             const twoDaysLaterWeatherIcon =
               weatherData.daily[2].weather[0].icon;
             const twoDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${twoDaysLaterWeatherIcon}@2x.png`;
-            const threeDaysLaterTempMin = weatherData.daily[3].temp.min;
-            const threeDaysLaterTempMax = weatherData.daily[3].temp.max;
+            const threeDaysLaterTempMin =
+              weatherData.daily[3].temp.min.toFixed(1);
+            const threeDaysLaterTempMax =
+              weatherData.daily[3].temp.max.toFixed(1);
             const threeDaysLaterWeatherDescription =
               weatherData.daily[3].weather[0].description;
             const threeDaysLaterWeatherIcon =
               weatherData.daily[3].weather[0].icon;
             const threeDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${threeDaysLaterWeatherIcon}@2x.png`;
-            const fourDaysLaterTempMin = weatherData.daily[4].temp.min;
-            const fourDaysLaterTempMax = weatherData.daily[4].temp.max;
+            const fourDaysLaterTempMin =
+              weatherData.daily[4].temp.min.toFixed(1);
+            const fourDaysLaterTempMax =
+              weatherData.daily[4].temp.max.toFixed(1);
             const fourDaysLaterWeatherDescription =
               weatherData.daily[4].weather[0].description;
             const fourDaysLaterWeatherIcon =
               weatherData.daily[4].weather[0].icon;
             const fourDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fourDaysLaterWeatherIcon}@2x.png`;
-            const fiveDaysLaterTempMin = weatherData.daily[5].temp.min;
-            const fiveDaysLaterTempMax = weatherData.daily[5].temp.max;
+            const fiveDaysLaterTempMin =
+              weatherData.daily[5].temp.min.toFixed(1);
+            const fiveDaysLaterTempMax =
+              weatherData.daily[5].temp.max.toFixed(1);
             const fiveDaysLaterWeatherDescription =
               weatherData.daily[5].weather[0].description;
             const fiveDaysLaterWeatherIcon =
               weatherData.daily[5].weather[0].icon;
             const fiveDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fiveDaysLaterWeatherIcon}@2x.png`;
-            const sixDaysLaterTempMin = weatherData.daily[6].temp.min;
-            const sixDaysLaterTempMax = weatherData.daily[6].temp.max;
+            const sixDaysLaterTempMin =
+              weatherData.daily[6].temp.min.toFixed(1);
+            const sixDaysLaterTempMax =
+              weatherData.daily[6].temp.max.toFixed(1);
             const sixDaysLaterWeatherIcon =
               weatherData.daily[6].weather[0].icon;
             const sixDaysLaterWeatherDescription =
               weatherData.daily[6].weather[0].description;
             const sixDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sixDaysLaterWeatherIcon}@2x.png`;
-            const sevenDaysLaterTempMin = weatherData.daily[7].temp.min;
-            const sevenDaysLaterTempMax = weatherData.daily[7].temp.max;
+            const sevenDaysLaterTempMin =
+              weatherData.daily[7].temp.min.toFixed(1);
+            const sevenDaysLaterTempMax =
+              weatherData.daily[7].temp.max.toFixed(1);
             const sevenDaysLaterWeatherDescription =
               weatherData.daily[7].weather[0].description;
             const sevenDaysLaterWeatherIcon =
@@ -304,150 +319,161 @@ app.post("/", function (req, res) {
             );
 
             // hourly weather
-            const currentTemp = weatherData.hourly[0].temp;
+            const currentTemp = weatherData.hourly[0].temp.toFixed(1);
             const currentDescription =
               weatherData.hourly[0].weather[0].description;
             const currentWeatherIcon = weatherData.hourly[0].weather[0].icon;
             const currentImageURL = `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
-            const oneHourLaterTemp = weatherData.hourly[1].temp;
+            const oneHourLaterTemp = weatherData.hourly[1].temp.toFixed(1);
             const oneHourLaterDescription =
               weatherData.hourly[1].weather[0].description;
             const oneHourLaterWeatherIcon =
               weatherData.hourly[1].weather[0].icon;
             const oneHourLaterImageURL = `http://openweathermap.org/img/wn/${oneHourLaterWeatherIcon}@2x.png`;
-            const twoHoursLaterTemp = weatherData.hourly[2].temp;
+            const twoHoursLaterTemp = weatherData.hourly[2].temp.toFixed(1);
             const twoHoursLaterDescription =
               weatherData.hourly[2].weather[0].description;
             const twoHoursLaterWeatherIcon =
               weatherData.hourly[2].weather[0].icon;
             const twoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twoHoursLaterWeatherIcon}@2x.png`;
-            const threeHoursLaterTemp = weatherData.hourly[3].temp;
+            const threeHoursLaterTemp = weatherData.hourly[3].temp.toFixed(1);
             const threeHoursLaterDescription =
               weatherData.hourly[3].weather[0].description;
             const threeHoursLaterWeatherIcon =
               weatherData.hourly[3].weather[0].icon;
             const threeHoursLaterImageURL = `http://openweathermap.org/img/wn/${threeHoursLaterWeatherIcon}@2x.png`;
-            const fourHoursLaterTemp = weatherData.hourly[4].temp;
+            const fourHoursLaterTemp = weatherData.hourly[4].temp.toFixed(1);
             const fourHoursLaterDescription =
               weatherData.hourly[4].weather[0].description;
             const fourHoursLaterWeatherIcon =
               weatherData.hourly[4].weather[0].icon;
             const fourHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourHoursLaterWeatherIcon}@2x.png`;
-            const fiveHoursLaterTemp = weatherData.hourly[5].temp;
+            const fiveHoursLaterTemp = weatherData.hourly[5].temp.toFixed(1);
             const fiveHoursLaterDescription =
               weatherData.hourly[5].weather[0].description;
             const fiveHoursLaterWeatherIcon =
               weatherData.hourly[5].weather[0].icon;
             const fiveHoursLaterImageURL = `http://openweathermap.org/img/wn/${fiveHoursLaterWeatherIcon}@2x.png`;
-            const sixHoursLaterTemp = weatherData.hourly[6].temp;
+            const sixHoursLaterTemp = weatherData.hourly[6].temp.toFixed(1);
             const sixHoursLaterDescription =
               weatherData.hourly[6].weather[0].description;
             const sixHoursLaterWeatherIcon =
               weatherData.hourly[6].weather[0].icon;
             const sixHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixHoursLaterWeatherIcon}@2x.png`;
-            const sevenHoursLaterTemp = weatherData.hourly[7].temp;
+            const sevenHoursLaterTemp = weatherData.hourly[7].temp.toFixed(1);
             const sevenHoursLaterDescription =
               weatherData.hourly[7].weather[0].description;
             const sevenHoursLaterWeatherIcon =
               weatherData.hourly[7].weather[0].icon;
             const sevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sevenHoursLaterWeatherIcon}@2x.png`;
-            const eightHoursLaterTemp = weatherData.hourly[8].temp;
+            const eightHoursLaterTemp = weatherData.hourly[8].temp.toFixed(1);
             const eightHoursLaterDescription =
               weatherData.hourly[8].weather[0].description;
             const eightHoursLaterWeatherIcon =
               weatherData.hourly[8].weather[0].icon;
             const eightHoursLaterImageURL = `http://openweathermap.org/img/wn/${eightHoursLaterWeatherIcon}@2x.png`;
-            const nineHoursLaterTemp = weatherData.hourly[9].temp;
+            const nineHoursLaterTemp = weatherData.hourly[9].temp.toFixed(1);
             const nineHoursLaterDescription =
               weatherData.hourly[9].weather[0].description;
             const nineHoursLaterWeatherIcon =
               weatherData.hourly[9].weather[0].icon;
             const nineHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineHoursLaterWeatherIcon}@2x.png`;
-            const tenHoursLaterTemp = weatherData.hourly[10].temp;
+            const tenHoursLaterTemp = weatherData.hourly[10].temp.toFixed(1);
             const tenHoursLaterDescription =
               weatherData.hourly[10].weather[0].description;
             const tenHoursLaterWeatherIcon =
               weatherData.hourly[10].weather[0].icon;
             const tenHoursLaterImageURL = `http://openweathermap.org/img/wn/${tenHoursLaterWeatherIcon}@2x.png`;
-            const elevenHoursLaterTemp = weatherData.hourly[11].temp;
+            const elevenHoursLaterTemp = weatherData.hourly[11].temp.toFixed(1);
             const elevenHoursLaterDescription =
               weatherData.hourly[11].weather[0].description;
             const elevenHoursLaterWeatherIcon =
               weatherData.hourly[11].weather[0].icon;
             const elevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${elevenHoursLaterWeatherIcon}@2x.png`;
-            const twelveHoursLaterTemp = weatherData.hourly[12].temp;
+            const twelveHoursLaterTemp = weatherData.hourly[12].temp.toFixed(1);
             const twelveHoursLaterDescription =
               weatherData.hourly[12].weather[0].description;
             const twelveHoursLaterWeatherIcon =
               weatherData.hourly[12].weather[0].icon;
             const twelveHoursLaterImageURL = `http://openweathermap.org/img/wn/${twelveHoursLaterWeatherIcon}@2x.png`;
-            const thirteenHoursLaterTemp = weatherData.hourly[13].temp;
+            const thirteenHoursLaterTemp =
+              weatherData.hourly[13].temp.toFixed(1);
             const thirteenHoursLaterDescription =
               weatherData.hourly[13].weather[0].description;
             const thirteenHoursLaterWeatherIcon =
               weatherData.hourly[13].weather[0].icon;
             const thirteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${thirteenHoursLaterWeatherIcon}@2x.png`;
-            const fourteenHoursLaterTemp = weatherData.hourly[14].temp;
+            const fourteenHoursLaterTemp =
+              weatherData.hourly[14].temp.toFixed(1);
             const fourteenHoursLaterDescription =
               weatherData.hourly[14].weather[0].description;
             const fourteenHoursLaterWeatherIcon =
               weatherData.hourly[14].weather[0].icon;
             const fourteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourteenHoursLaterWeatherIcon}@2x.png`;
-            const fifteenHoursLaterTemp = weatherData.hourly[15].temp;
+            const fifteenHoursLaterTemp =
+              weatherData.hourly[15].temp.toFixed(1);
             const fifteenHoursLaterDescription =
               weatherData.hourly[15].weather[0].description;
             const fifteenHoursLaterWeatherIcon =
               weatherData.hourly[15].weather[0].icon;
             const fifteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fifteenHoursLaterWeatherIcon}@2x.png`;
-            const sixteenHoursLaterTemp = weatherData.hourly[16].temp;
+            const sixteenHoursLaterTemp =
+              weatherData.hourly[16].temp.toFixed(1);
             const sixteenHoursLaterDescription =
               weatherData.hourly[16].weather[0].description;
             const sixteenHoursLaterWeatherIcon =
               weatherData.hourly[16].weather[0].icon;
             const sixteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixteenHoursLaterWeatherIcon}@2x.png`;
-            const seventeenHoursLaterTemp = weatherData.hourly[17].temp;
+            const seventeenHoursLaterTemp =
+              weatherData.hourly[17].temp.toFixed(1);
             const seventeenHoursLaterDescription =
               weatherData.hourly[17].weather[0].description;
             const seventeenHoursLaterWeatherIcon =
               weatherData.hourly[17].weather[0].icon;
             const seventeenHoursLaterImageURL = `http://openweathermap.org/img/wn/${seventeenHoursLaterWeatherIcon}@2x.png`;
-            const eighteenHoursLaterTemp = weatherData.hourly[18].temp;
+            const eighteenHoursLaterTemp =
+              weatherData.hourly[18].temp.toFixed(1);
             const eighteenHoursLaterDescription =
               weatherData.hourly[18].weather[0].description;
             const eighteenHoursLaterWeatherIcon =
               weatherData.hourly[18].weather[0].icon;
             const eighteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${eighteenHoursLaterWeatherIcon}@2x.png`;
-            const nineteenHoursLaterTemp = weatherData.hourly[19].temp;
+            const nineteenHoursLaterTemp =
+              weatherData.hourly[19].temp.toFixed(1);
             const nineteenHoursLaterDescription =
               weatherData.hourly[19].weather[0].description;
             const nineteenHoursLaterWeatherIcon =
               weatherData.hourly[19].weather[0].icon;
             const nineteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineteenHoursLaterWeatherIcon}@2x.png`;
-            const twentyHoursLaterTemp = weatherData.hourly[20].temp;
+            const twentyHoursLaterTemp = weatherData.hourly[20].temp.toFixed(1);
             const twentyHoursLaterDescription =
               weatherData.hourly[20].weather[0].description;
             const twentyHoursLaterWeatherIcon =
               weatherData.hourly[20].weather[0].icon;
             const twentyHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyHoursLaterWeatherIcon}@2x.png`;
-            const twentyOneHoursLaterTemp = weatherData.hourly[21].temp;
+            const twentyOneHoursLaterTemp =
+              weatherData.hourly[21].temp.toFixed(1);
             const twentyOneHoursLaterDescription =
               weatherData.hourly[21].weather[0].description;
             const twentyOneHoursLaterWeatherIcon =
               weatherData.hourly[21].weather[0].icon;
             const twentyOneHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyOneHoursLaterWeatherIcon}@2x.png`;
-            const twentyTwoHoursLaterTemp = weatherData.hourly[22].temp;
+            const twentyTwoHoursLaterTemp =
+              weatherData.hourly[22].temp.toFixed(1);
             const twentyTwoHoursLaterDescription =
               weatherData.hourly[22].weather[0].description;
             const twentyTwoHoursLaterWeatherIcon =
               weatherData.hourly[22].weather[0].icon;
             const twentyTwoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyTwoHoursLaterWeatherIcon}@2x.png`;
-            const twentyThreeHoursLaterTemp = weatherData.hourly[23].temp;
+            const twentyThreeHoursLaterTemp =
+              weatherData.hourly[23].temp.toFixed(1);
             const twentyThreeHoursLaterDescription =
               weatherData.hourly[23].weather[0].description;
             const twentyThreeHoursLaterWeatherIcon =
               weatherData.hourly[23].weather[0].icon;
             const twentyThreeHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyThreeHoursLaterWeatherIcon}@2x.png`;
-            const twentyFourHoursLaterTemp = weatherData.hourly[24].temp;
+            const twentyFourHoursLaterTemp =
+              weatherData.hourly[24].temp.toFixed(1);
             const twentyFourHoursLaterDescription =
               weatherData.hourly[24].weather[0].description;
             const twentyFourHoursLaterWeatherIcon =
