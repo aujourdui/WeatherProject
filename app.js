@@ -29,8 +29,6 @@ app.post("/", function (req, res) {
   https.get(url, function (response) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
-      // console.log(weatherData.coord.lon);
-      // console.log(weatherData.coord.lat);
       if (query === weatherData.name) {
         const temp = weatherData.main.temp;
         const maxTemp = weatherData.main.temp_max;
@@ -67,7 +65,7 @@ app.post("/", function (req, res) {
           <div>
           <hr style="border: 1px solid gray;width:300px">
             <h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-bottom:0;">
-              Max: ${maxTemp} &#8451
+              Max: ${maxTemp} &#8451;
             </h1>
             <h1 style="color:#8E0505;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top:0;">
               Min: ${minTemp} &#8451;
@@ -83,14 +81,12 @@ app.post("/", function (req, res) {
         );
 
         //  daily weather
-
         const lon = weatherData.coord.lon;
         const lat = weatherData.coord.lat;
 
         const urlGeo = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=6ead27bdb26041ed3ea800802ff72381`;
 
         https.get(urlGeo, function (response) {
-          // console.log(response.statusCode);
           let resultData = "";
           response.on("data", (data) => (resultData += data));
           response.on("end", () => {
@@ -150,6 +146,7 @@ app.post("/", function (req, res) {
               weatherData.daily[7].weather[0].icon;
             const sevenDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sevenDaysLaterWeatherIcon}@2x.png`;
 
+            // get real days
             const currentDate = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000
             );
@@ -175,6 +172,7 @@ app.post("/", function (req, res) {
               new Date().getTime() + 24 * 60 * 60 * 1000 * 8
             );
 
+            // get week of days
             const d = new Date();
 
             const weekday = new Array(13);
@@ -193,7 +191,6 @@ app.post("/", function (req, res) {
             weekday[12] = weekday[5];
             weekday[13] = weekday[6];
 
-            // const dayOfWeek = weekday[d.getDay()];
             const dayOne = weekday[d.getDay()];
             const dayTwo = weekday[d.getDay() + 1];
             const dayThree = weekday[d.getDay() + 2];
@@ -201,8 +198,6 @@ app.post("/", function (req, res) {
             const dayFive = weekday[d.getDay() + 4];
             const daySix = weekday[d.getDay() + 5];
             const daySeven = weekday[d.getDay() + 6];
-
-            // var distance = (daytoset + 7 - currentDay) % 7;
 
             const month = currentDate.getMonth() + 1;
 
@@ -215,7 +210,6 @@ app.post("/", function (req, res) {
             const sixDaysLater = sixDatesLater.getDate() - 1;
             const sevenDaysLater = sevenDatesLater.getDate() - 1;
 
-            // console.log(`${month}-${day} ${hours}`);
             const date = `${month}/${day}${dayOne}`;
             const oneDayLaterDate = `${month}/${oneDayLater}${dayTwo}`;
             const twoDaysLaterDate = `${month}/${twoDaysLater}${dayThree}`;
@@ -309,7 +303,6 @@ app.post("/", function (req, res) {
             );
 
             // hourly weather
-
             const currentTemp = weatherData.hourly[0].temp;
             const currentDescription =
               weatherData.hourly[0].weather[0].description;
@@ -460,6 +453,7 @@ app.post("/", function (req, res) {
               weatherData.hourly[24].weather[0].icon;
             const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
 
+            // get am/pm time
             let hours = currentDate.getHours();
             const ampm = hours >= 12 ? "pm" : "am";
             hours = hours % 12;
@@ -680,7 +674,7 @@ app.post("/", function (req, res) {
               ? getTwentyFourHoursLater
               : 12;
 
-            // am/pm
+            // display am/pm
             const currentHour = `${hours}:00${ampm}`;
             const oneHourLater = `${getOneHourLater}:00${ampmOne}`;
             const twoHoursLater = `${getTwoHoursLater}:00${ampmTwo}`;
@@ -707,7 +701,7 @@ app.post("/", function (req, res) {
             const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00${ampmTwentyThree}`;
             const twentyFourHoursLater = `${getTwentyFourHoursLater}:00${ampmTwentyFour}`;
 
-            // 24hours
+            // display 24hours
             // const currentHour = `${hours}:00`;
             // const oneHourLater = `${getOneHourLater}:00`;
             // const twoHoursLater = `${getTwoHoursLater}:00`;
