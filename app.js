@@ -451,148 +451,279 @@ app.post("/", function (req, res) {
               weatherData.hourly[24].weather[0].icon;
             const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
 
-            const hours = currentDate.getHours();
+            let hours = currentDate.getHours();
+            const ampm = hours >= 12 ? "pm" : "am";
+            hours = hours % 12;
+            hours = hours ? hours : 12;
 
             const setOneHourLater = new Date();
             setOneHourLater.setHours(setOneHourLater.getHours() + 1);
-            const getOneHourLater = setOneHourLater.getHours();
+            let getOneHourLater = setOneHourLater.getHours();
+            const ampmOne = getOneHourLater >= 12 ? "pm" : "am";
+            getOneHourLater = getOneHourLater % 12;
+            getOneHourLater = getOneHourLater ? getOneHourLater : 12;
 
             const setTwoHoursLater = new Date();
             setTwoHoursLater.setHours(setTwoHoursLater.getHours() + 2);
-            const getTwoHoursLater = setTwoHoursLater.getHours();
+            let getTwoHoursLater = setTwoHoursLater.getHours();
+            const ampmTwo = getTwoHoursLater >= 12 ? "pm" : "am";
+            getTwoHoursLater = getTwoHoursLater % 12;
+            getTwoHoursLater = getTwoHoursLater ? getTwoHoursLater : 12;
 
             const setThreeHoursLater = new Date();
             setThreeHoursLater.setHours(setThreeHoursLater.getHours() + 3);
-            const getThreeHoursLater = setThreeHoursLater.getHours();
+            let getThreeHoursLater = setThreeHoursLater.getHours();
+            const ampmThree = getThreeHoursLater >= 12 ? "pm" : "am";
+            getThreeHoursLater = getThreeHoursLater % 12;
+            getThreeHoursLater = getThreeHoursLater ? getThreeHoursLater : 12;
 
             const setFourHoursLater = new Date();
             setFourHoursLater.setHours(setFourHoursLater.getHours() + 4);
-            const getFourHoursLater = setFourHoursLater.getHours();
+            let getFourHoursLater = setFourHoursLater.getHours();
+            const ampmFour = getFourHoursLater >= 12 ? "pm" : "am";
+            getFourHoursLater = getFourHoursLater % 12;
+            getFourHoursLater = getFourHoursLater ? getFourHoursLater : 12;
 
             const setFiveHoursLater = new Date();
             setFiveHoursLater.setHours(setFiveHoursLater.getHours() + 5);
-            const getFiveHoursLater = setFiveHoursLater.getHours();
+            let getFiveHoursLater = setFiveHoursLater.getHours();
+            const ampmFive = getFiveHoursLater >= 12 ? "pm" : "am";
+            getFiveHoursLater = getFiveHoursLater % 12;
+            getFiveHoursLater = getFiveHoursLater ? getFiveHoursLater : 12;
 
             const setSixHoursLater = new Date();
             setSixHoursLater.setHours(setSixHoursLater.getHours() + 6);
-            const getSixHoursLater = setSixHoursLater.getHours();
+            let getSixHoursLater = setSixHoursLater.getHours();
+            const ampmSix = getSixHoursLater >= 12 ? "pm" : "am";
+            getSixHoursLater = getSixHoursLater % 12;
+            getSixHoursLater = getSixHoursLater ? getSixHoursLater : 12;
 
             const setSevenHoursLater = new Date();
             setSevenHoursLater.setHours(setSevenHoursLater.getHours() + 7);
-            const getSevenHoursLater = setSevenHoursLater.getHours();
+            let getSevenHoursLater = setSevenHoursLater.getHours();
+            const ampmSeven = getSevenHoursLater >= 12 ? "pm" : "am";
+            getSevenHoursLater = getSevenHoursLater % 12;
+            getSevenHoursLater = getSevenHoursLater ? getSevenHoursLater : 12;
 
             const setEightHoursLater = new Date();
             setEightHoursLater.setHours(setEightHoursLater.getHours() + 8);
-            const getEightHoursLater = setEightHoursLater.getHours();
+            let getEightHoursLater = setEightHoursLater.getHours();
+            const ampmEight = getEightHoursLater >= 12 ? "pm" : "am";
+            getEightHoursLater = getEightHoursLater % 12;
+            getEightHoursLater = getEightHoursLater ? getEightHoursLater : 12;
 
             const setNineHoursLater = new Date();
             setNineHoursLater.setHours(setNineHoursLater.getHours() + 9);
-            const getNineHoursLater = setNineHoursLater.getHours();
+            let getNineHoursLater = setNineHoursLater.getHours();
+            const ampmNine = getNineHoursLater >= 12 ? "pm" : "am";
+            getNineHoursLater = getNineHoursLater % 12;
+            getNineHoursLater = getNineHoursLater ? getNineHoursLater : 12;
 
             const setTenHoursLater = new Date();
             setTenHoursLater.setHours(setTenHoursLater.getHours() + 10);
-            const getTenHoursLater = setTenHoursLater.getHours();
+            let getTenHoursLater = setTenHoursLater.getHours();
+            const ampmTen = getTenHoursLater >= 12 ? "pm" : "am";
+            getTenHoursLater = getTenHoursLater % 12;
+            getTenHoursLater = getTenHoursLater ? getTenHoursLater : 12;
 
             const setElevenHoursLater = new Date();
             setElevenHoursLater.setHours(setElevenHoursLater.getHours() + 11);
-            const getElevenHoursLater = setElevenHoursLater.getHours();
+            let getElevenHoursLater = setElevenHoursLater.getHours();
+            const ampmEleven = getElevenHoursLater >= 12 ? "pm" : "am";
+            getElevenHoursLater = getElevenHoursLater % 12;
+            getElevenHoursLater = getElevenHoursLater
+              ? getElevenHoursLater
+              : 12;
 
             const setTwelveHoursLater = new Date();
             setTwelveHoursLater.setHours(setTwelveHoursLater.getHours() + 12);
-            const getTwelveHoursLater = setTwelveHoursLater.getHours();
+            let getTwelveHoursLater = setTwelveHoursLater.getHours();
+            const ampmTwelve = getTwelveHoursLater >= 12 ? "pm" : "am";
+            getTwelveHoursLater = getTwelveHoursLater % 12;
+            getTwelveHoursLater = getTwelveHoursLater
+              ? getTwelveHoursLater
+              : 12;
 
             const setThirteenHoursLater = new Date();
             setThirteenHoursLater.setHours(
               setThirteenHoursLater.getHours() + 13
             );
-            const getThirteenHoursLater = setThirteenHoursLater.getHours();
+            let getThirteenHoursLater = setThirteenHoursLater.getHours();
+            const ampmThirteen = getThirteenHoursLater >= 12 ? "pm" : "am";
+            getThirteenHoursLater = getThirteenHoursLater % 12;
+            getThirteenHoursLater = getThirteenHoursLater
+              ? getThirteenHoursLater
+              : 12;
 
             const setFourteenHoursLater = new Date();
             setFourteenHoursLater.setHours(
               setFourteenHoursLater.getHours() + 14
             );
-            const getFourteenHoursLater = setFourteenHoursLater.getHours();
+            let getFourteenHoursLater = setFourteenHoursLater.getHours();
+            const ampmFourteen = getFourteenHoursLater >= 12 ? "pm" : "am";
+            getFourteenHoursLater = getFourteenHoursLater % 12;
+            getFourteenHoursLater = getFourteenHoursLater
+              ? getFourteenHoursLater
+              : 12;
 
             const setFifteenHoursLater = new Date();
             setFifteenHoursLater.setHours(setFifteenHoursLater.getHours() + 15);
-            const getFifteenHoursLater = setFifteenHoursLater.getHours();
+            let getFifteenHoursLater = setFifteenHoursLater.getHours();
+            const ampmFifteen = getFifteenHoursLater >= 12 ? "pm" : "am";
+            getFifteenHoursLater = getFifteenHoursLater % 12;
+            getFifteenHoursLater = getFifteenHoursLater
+              ? getFifteenHoursLater
+              : 12;
 
             const setSixteenHoursLater = new Date();
             setSixteenHoursLater.setHours(setSixteenHoursLater.getHours() + 16);
-            const getSixteenHoursLater = setSixteenHoursLater.getHours();
+            let getSixteenHoursLater = setSixteenHoursLater.getHours();
+            const ampmSixteen = getSixteenHoursLater >= 12 ? "pm" : "am";
+            getSixteenHoursLater = getSixteenHoursLater % 12;
+            getSixteenHoursLater = getSixteenHoursLater
+              ? getSixteenHoursLater
+              : 12;
 
             const setSeventeenHoursLater = new Date();
             setSeventeenHoursLater.setHours(
               setSeventeenHoursLater.getHours() + 17
             );
-            const getSeventeenHoursLater = setSeventeenHoursLater.getHours();
+            let getSeventeenHoursLater = setSeventeenHoursLater.getHours();
+            const ampmSeventeen = getSeventeenHoursLater >= 12 ? "pm" : "am";
+            getSeventeenHoursLater = getSeventeenHoursLater % 12;
+            getSeventeenHoursLater = getSeventeenHoursLater
+              ? getSeventeenHoursLater
+              : 12;
 
             const setEighteenHoursLater = new Date();
             setEighteenHoursLater.setHours(
               setEighteenHoursLater.getHours() + 18
             );
-            const getEighteenHoursLater = setEighteenHoursLater.getHours();
+            let getEighteenHoursLater = setEighteenHoursLater.getHours();
+            const ampmEighteen = getEighteenHoursLater >= 12 ? "pm" : "am";
+            getEighteenHoursLater = getEighteenHoursLater % 12;
+            getEighteenHoursLater = getEighteenHoursLater
+              ? getEighteenHoursLater
+              : 12;
 
             const setNineteenHoursLater = new Date();
             setNineteenHoursLater.setHours(
               setNineteenHoursLater.getHours() + 19
             );
-            const getNineteenHoursLater = setNineteenHoursLater.getHours();
+            let getNineteenHoursLater = setNineteenHoursLater.getHours();
+            const ampmNineteen = getNineteenHoursLater >= 12 ? "pm" : "am";
+            getNineteenHoursLater = getNineteenHoursLater % 12;
+            getNineteenHoursLater = getNineteenHoursLater
+              ? getNineteenHoursLater
+              : 12;
 
             const setTwentyHoursLater = new Date();
             setTwentyHoursLater.setHours(setTwentyHoursLater.getHours() + 20);
-            const getTwentyHoursLater = setTwentyHoursLater.getHours();
+            let getTwentyHoursLater = setTwentyHoursLater.getHours();
+            const ampmTwenty = getTwentyHoursLater >= 12 ? "pm" : "am";
+            getTwentyHoursLater = getTwentyHoursLater % 12;
+            getTwentyHoursLater = getTwentyHoursLater
+              ? getTwentyHoursLater
+              : 12;
 
             const setTwentyOneHoursLater = new Date();
             setTwentyOneHoursLater.setHours(
               setTwentyOneHoursLater.getHours() + 21
             );
-            const getTwentyOneHoursLater = setTwentyOneHoursLater.getHours();
+            let getTwentyOneHoursLater = setTwentyOneHoursLater.getHours();
+            const ampmTwentyOne = getTwentyOneHoursLater >= 12 ? "pm" : "am";
+            getTwentyOneHoursLater = getTwentyOneHoursLater % 12;
+            getTwentyOneHoursLater = getTwentyOneHoursLater
+              ? getTwentyOneHoursLater
+              : 12;
 
             const setTwentyTwoHoursLater = new Date();
             setTwentyTwoHoursLater.setHours(
               setTwentyTwoHoursLater.getHours() + 22
             );
-            const getTwentyTwoHoursLater = setTwentyTwoHoursLater.getHours();
+            let getTwentyTwoHoursLater = setTwentyTwoHoursLater.getHours();
+            const ampmTwentyTwo = getTwentyTwoHoursLater >= 12 ? "pm" : "am";
+            getTwentyTwoHoursLater = getTwentyTwoHoursLater % 12;
+            getTwentyTwoHoursLater = getTwentyTwoHoursLater
+              ? getTwentyTwoHoursLater
+              : 12;
 
             const setTwentyThreeHoursLater = new Date();
             setTwentyThreeHoursLater.setHours(
               setTwentyThreeHoursLater.getHours() + 23
             );
-            const getTwentyThreeHoursLater =
-              setTwentyThreeHoursLater.getHours();
+            let getTwentyThreeHoursLater = setTwentyThreeHoursLater.getHours();
+            const ampmTwentyThree =
+              getTwentyThreeHoursLater >= 12 ? "pm" : "am";
+            getTwentyThreeHoursLater = getTwentyThreeHoursLater % 12;
+            getTwentyThreeHoursLater = getTwentyThreeHoursLater
+              ? getTwentyThreeHoursLater
+              : 12;
 
             const setTwentyFourHoursLater = new Date();
             setTwentyFourHoursLater.setHours(
               setTwentyFourHoursLater.getHours() + 24
             );
-            const getTwentyFourHoursLater = setTwentyFourHoursLater.getHours();
+            let getTwentyFourHoursLater = setTwentyFourHoursLater.getHours();
+            const ampmTwentyFour = getTwentyFourHoursLater >= 12 ? "pm" : "am";
+            getTwentyFourHoursLater = getTwentyFourHoursLater % 12;
+            getTwentyFourHoursLater = getTwentyFourHoursLater
+              ? getTwentyFourHoursLater
+              : 12;
 
-            const currentHour = `${hours}:00`;
-            const oneHourLater = `${getOneHourLater}:00`;
-            const twoHoursLater = `${getTwoHoursLater}:00`;
-            const threeHoursLater = `${getThreeHoursLater}:00`;
-            const fourHoursLater = `${getFourHoursLater}:00`;
-            const fiveHoursLater = `${getFiveHoursLater}:00`;
-            const sixHoursLater = `${getSixHoursLater}:00`;
-            const sevenHoursLater = `${getSevenHoursLater}:00`;
-            const eightHoursLater = `${getEightHoursLater}:00`;
-            const nineHoursLater = `${getNineHoursLater}:00`;
-            const tenHoursLater = `${getTenHoursLater}:00`;
-            const elevenHoursLater = `${getElevenHoursLater}:00`;
-            const twelveHoursLater = `${getTwelveHoursLater}:00`;
-            const thirteenHoursLater = `${getThirteenHoursLater}:00`;
-            const fourteenHoursLater = `${getFourteenHoursLater}:00`;
-            const fifteenHoursLater = `${getFifteenHoursLater}:00`;
-            const sixteenHoursLater = `${getSixteenHoursLater}:00`;
-            const seventeenHoursLater = `${getSeventeenHoursLater}:00`;
-            const eighteenHoursLater = `${getEighteenHoursLater}:00`;
-            const nineteenHoursLater = `${getNineteenHoursLater}:00`;
-            const twentyHoursLater = `${getTwentyHoursLater}:00`;
-            const twentyOneHoursLater = `${getTwentyOneHoursLater}:00`;
-            const twentyTwoHoursLater = `${getTwentyTwoHoursLater}:00`;
-            const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00`;
-            const twentyFourHoursLater = `${getTwentyFourHoursLater}:00`;
+            // am/pm
+            const currentHour = `${hours}:00${ampm}`;
+            const oneHourLater = `${getOneHourLater}:00${ampmOne}`;
+            const twoHoursLater = `${getTwoHoursLater}:00${ampmTwo}`;
+            const threeHoursLater = `${getThreeHoursLater}:00${ampmThree}`;
+            const fourHoursLater = `${getFourHoursLater}:00${ampmFour}`;
+            const fiveHoursLater = `${getFiveHoursLater}:00${ampmFive}`;
+            const sixHoursLater = `${getSixHoursLater}:00${ampmSix}`;
+            const sevenHoursLater = `${getSevenHoursLater}:00${ampmSeven}`;
+            const eightHoursLater = `${getEightHoursLater}:00${ampmEight}`;
+            const nineHoursLater = `${getNineHoursLater}:00${ampmNine}`;
+            const tenHoursLater = `${getTenHoursLater}:00${ampmTen}`;
+            const elevenHoursLater = `${getElevenHoursLater}:00${ampmEleven}`;
+            const twelveHoursLater = `${getTwelveHoursLater}:00${ampmTwelve}`;
+            const thirteenHoursLater = `${getThirteenHoursLater}:00${ampmThirteen}`;
+            const fourteenHoursLater = `${getFourteenHoursLater}:00${ampmFourteen}`;
+            const fifteenHoursLater = `${getFifteenHoursLater}:00${ampmFifteen}`;
+            const sixteenHoursLater = `${getSixteenHoursLater}:00${ampmSixteen}`;
+            const seventeenHoursLater = `${getSeventeenHoursLater}:00${ampmSeventeen}`;
+            const eighteenHoursLater = `${getEighteenHoursLater}:00${ampmEighteen}`;
+            const nineteenHoursLater = `${getNineteenHoursLater}:00${ampmNineteen}`;
+            const twentyHoursLater = `${getTwentyHoursLater}:00${ampmTwenty}`;
+            const twentyOneHoursLater = `${getTwentyOneHoursLater}:00${ampmTwentyOne}`;
+            const twentyTwoHoursLater = `${getTwentyTwoHoursLater}:00${ampmTwentyTwo}`;
+            const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00${ampmTwentyThree}`;
+            const twentyFourHoursLater = `${getTwentyFourHoursLater}:00${ampmTwentyFour}`;
+
+            // 24hours
+            // const currentHour = `${hours}:00`;
+            // const oneHourLater = `${getOneHourLater}:00`;
+            // const twoHoursLater = `${getTwoHoursLater}:00`;
+            // const threeHoursLater = `${getThreeHoursLater}:00`;
+            // const fourHoursLater = `${getFourHoursLater}:00`;
+            // const fiveHoursLater = `${getFiveHoursLater}:00`;
+            // const sixHoursLater = `${getSixHoursLater}:00`;
+            // const sevenHoursLater = `${getSevenHoursLater}:00`;
+            // const eightHoursLater = `${getEightHoursLater}:00`;
+            // const nineHoursLater = `${getNineHoursLater}:00`;
+            // const tenHoursLater = `${getTenHoursLater}:00`;
+            // const elevenHoursLater = `${getElevenHoursLater}:00`;
+            // const twelveHoursLater = `${getTwelveHoursLater}:00`;
+            // const thirteenHoursLater = `${getThirteenHoursLater}:00`;
+            // const fourteenHoursLater = `${getFourteenHoursLater}:00`;
+            // const fifteenHoursLater = `${getFifteenHoursLater}:00`;
+            // const sixteenHoursLater = `${getSixteenHoursLater}:00`;
+            // const seventeenHoursLater = `${getSeventeenHoursLater}:00`;
+            // const eighteenHoursLater = `${getEighteenHoursLater}:00`;
+            // const nineteenHoursLater = `${getNineteenHoursLater}:00`;
+            // const twentyHoursLater = `${getTwentyHoursLater}:00`;
+            // const twentyOneHoursLater = `${getTwentyOneHoursLater}:00`;
+            // const twentyTwoHoursLater = `${getTwentyTwoHoursLater}:00`;
+            // const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00`;
+            // const twentyFourHoursLater = `${getTwentyFourHoursLater}:00`;
 
             res.write(
               `
