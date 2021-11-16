@@ -29,7 +29,8 @@ app.post("/", function (req, res) {
   https.get(url, function (response) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
-      if (query === weatherData.name) {
+      if (query == weatherData.name) {
+        const country = weatherData.sys.country;
         const temp = weatherData.main.temp;
         const maxTemp = weatherData.main.temp_max;
         const minTemp = weatherData.main.temp_min;
@@ -38,7 +39,7 @@ app.post("/", function (req, res) {
         const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
         res.write(
-          `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query}</h1>`
+          `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${query} / ${country}</h1>`
         );
         res.write(
           `
