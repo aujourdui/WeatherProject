@@ -22,9 +22,7 @@ app.post("/", function (req, res) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
   const query = capitalizeFirstLetter(originalQuery);
-  console.log(query);
   const unit = "metric";
-
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
   // current weather
@@ -33,10 +31,8 @@ app.post("/", function (req, res) {
       const weatherData = JSON.parse(data);
       const cityName = weatherData.name;
 
-      const changeCityName = cityName.toLowerCase().replace(" ", "");
-      const changeQuery = query.toLowerCase().replace(" ", "");
-
-      if (changeCityName === changeQuery) {
+      if (query === cityName) {
+        const changeCityName = cityName.toLowerCase().replace(" ", "");
         const country = weatherData.sys.country;
         const temp = weatherData.main.temp.toFixed(1);
         const maxTemp = weatherData.main.temp_max.toFixed(1);
