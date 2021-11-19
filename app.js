@@ -22,16 +22,21 @@ app.post("/", function (req, res) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
   const query = capitalizeFirstLetter(originalQuery);
+  console.log(query);
   const unit = "metric";
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
+
   // current weather
   https.get(url, function (response) {
     response.on("data", function (data) {
       const weatherData = JSON.parse(data);
       const cityName = weatherData.name;
 
-      if (query === cityName) {
+      const changeCityName = cityName.toLowerCase().replace(" ", "");
+      const changeQuery = query.toLowerCase().replace(" ", "");
+
+      if (changeCityName === changeQuery) {
         const country = weatherData.sys.country;
         const temp = weatherData.main.temp.toFixed(1);
         const maxTemp = weatherData.main.temp_max.toFixed(1);
@@ -51,7 +56,11 @@ app.post("/", function (req, res) {
 
         res.write(
           `
-          <h1 class="city-name">${cityName} / ${country}</h1>`
+          <h1 id="city-name">${cityName} / ${country}
+          <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
+          <div>
+          </h1>
+          `
         );
         res.write(
           `
