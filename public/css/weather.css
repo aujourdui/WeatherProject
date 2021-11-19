@@ -1,9 +1,19 @@
-.city-name {
+#city-name {
   font-size: 3rem;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin-top: 3rem;
   color: #0c2d48;
+}
+
+#city-background {
+  width: 80%;
+  height: 200px;
+  margin-top: 30px;
+  border-radius: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title-red {
@@ -58,25 +68,6 @@
   margin: 10px 0 10px 0;
 }
 
-/* .element-center {
-  display: flex;
-  justify-content: center;
-} */
-
-/* .date {
-  color: blue;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 0 1rem 0 0;
-  margin: 10px 0 10px 0;
-}
-
-.daily-temp {
-  color: gray;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin: 10px 0 10px 0;
-} */
-
 .daily-description {
   color: darkblue;
   font-family: Arial, Helvetica, sans-serif;
@@ -106,14 +97,12 @@
 .hourly-temp {
   color: gray;
   font-family: Arial, Helvetica, sans-serif;
-  /* text-align: center; */
   margin: 5px 0 5px 0;
 }
 
 .hourly-description {
   color: darkblue;
   font-family: Arial, Helvetica, sans-serif;
-  /* text-align: center; */
   padding: 0 0 0 2rem;
   margin: 5px 0 5px 0;
 }
