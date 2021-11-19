@@ -23,8 +23,8 @@ app.post("/", function (req, res) {
   };
   const query = capitalizeFirstLetter(originalQuery);
   const unit = "metric";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
   // current weather
   https.get(url, function (response) {
     response.on("data", function (data) {
@@ -41,20 +41,30 @@ app.post("/", function (req, res) {
         const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
         res.write(
-          `<h1 style="font-size:3rem;color:#0C2D48;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top: 3rem">${cityName} / ${country}</h1>`
+          `
+          <head>
+            <title>Weather App</title>
+            <link rel="stylesheet" href="css/weather.css" />
+            <link rel="icon" type="image/jpg" href="/images/w_logo.jpg" />
+          </head>`
+        );
+
+        res.write(
+          `
+          <h1 class="city-name">${cityName} / ${country}</h1>`
         );
         res.write(
           `
-          <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;color:#B91646;">
+          <h1 class="title-red" style="margin-bottom:0;">
             Current
           </h1>
           <div>
-          <hr style="border: 1px dotted gray;width:600px">
-            <h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-bottom:0;">
+          <hr class="border">
+            <h1 class="title-blue" style="margin-bottom:0;">
               ${weatherDescription}
             </h1>
-            <img style="display: block;margin-left:auto;margin-right:auto;width:10%;" src=${imageURL}>
-            <h1 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top:0;">
+            <img class="img-current" src=${imageURL}>
+            <h1 class="temp" style="margin-top:0;">
               ${temp} &#8451;
             </h1>
           </div>`
@@ -62,24 +72,24 @@ app.post("/", function (req, res) {
 
         res.write(
           `
-          <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin-bottom: 0;margin-top: 3rem;color:#B91646;">
+          <h1 class="title-red" style="margin: 3rem 0 0 0;">
             Temperature detail
           </h1>
           <div>
-          <hr style="border: 1px solid gray;width:300px">
-            <h1 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-bottom:0;">
+          <hr class="border"">
+            <h1 class="title-blue" style="margin-bottom:0;">
               Max: ${maxTemp} &#8451;
             </h1>
-            <h1 style="color:#8E0505;font-family:Arial, Helvetica,sans-serif;text-align:center;margin-top:0;">
+            <h1 class="title-red" style="margin-top:0;">
               Min: ${minTemp} &#8451;
             </h1>
-            <hr style="border: 1px dotted gray;width:600px; margin-bottom: 2rem">
+            <hr class="border" style="margin-bottom: 2rem">
           </div>`
         );
 
         res.write(
           `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
-          <button type="submit"; name="button" style="font-size:1rem;background-color:#ECF87F;text-decoration:none;padding:10px 32px;border:none;cursor: pointer;">Home</button>
+          <button type="submit"; name="button" class="home">Home</button>
           </form>`
         );
 
@@ -236,84 +246,84 @@ app.post("/", function (req, res) {
 
             res.write(
               `
-                  <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin: 4rem 0 0 0;color:#B91646;">
+                  <h1 class="title-red" style="margin: 4rem 0 0 0">
                     Daily
                   </h1>
-                  <hr style="border: 1px dotted gray;width:600px">
+                  <hr class="border">
                   <div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0">${date} </h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${date} </h2>
                       <img style="width:60px;" src=${todayWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0">
+                      <h2 class="daily-temp">
                       ${todayTempMax} / ${todayTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0">${todayWeatherDescription}</h2>
+                      <h2 class="daily-description">${todayWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center;">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0">${oneDayLaterDate} </h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${oneDayLaterDate} </h2>
                       <img style="width:60px;" src=${oneDayLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0">
+                      <h2 class="daily-temp">
                       ${oneDayLaterTempMax} / ${oneDayLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0">${oneDayLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${oneDayLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center;margin: 10px 0 10px 0">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0">${twoDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date"">${twoDaysLaterDate}</h2>
                       <img style="width:60px;" src=${twoDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0">
+                      <h2 class="daily-temp">
                       ${twoDaysLaterTempMax} / ${twoDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0">${twoDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${twoDaysLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0">${threeDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date"">${threeDaysLaterDate}</h2>
                       <img style="width:60px;" src=${threeDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0;">
+                      <h2 class="daily-temp">
                       ${threeDaysLaterTempMax} / ${threeDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0;">${threeDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${threeDaysLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0;">${fourDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${fourDaysLaterDate}</h2>
                       <img style="width:60px;" src=${fourDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0;">
+                      <h2 class="daily-temp">
                       ${fourDaysLaterTempMax} / ${fourDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0;">${fourDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${fourDaysLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0;">${fiveDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${fiveDaysLaterDate}</h2>
                       <img style="width:60px;" src=${fiveDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0;">
+                      <h2 class="daily-temp">
                       ${fiveDaysLaterTempMax} / ${fiveDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0;">${fiveDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${fiveDaysLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0;">${sixDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${sixDaysLaterDate}</h2>
                       <img style="width:60px;" src=${sixDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0;">
+                      <h2 class="daily-temp">
                       ${sixDaysLaterTempMax} / ${sixDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0;">${sixDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${sixDaysLaterWeatherDescription}</h2>
                     </div>
-                    <div style="display: flex;align-item: center;justify-content: center">
-                      <h2 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 10px 0 10px 0;">${sevenDaysLaterDate}</h2>
+                    <div class="daily-element-center">
+                      <h2 class="date">${sevenDaysLaterDate}</h2>
                       <img style="width:60px;" src=${sevenDaysLaterWeatherImageURL}>
-                      <h2 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 10px 0 10px 0;">
+                      <h2 class="daily-temp">
                       ${sevenDaysLaterTempMax} / ${sevenDaysLaterTempMin} &#8451;
                       </h2>
-                      <h2 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 10px 0 10px 0;">${sevenDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${sevenDaysLaterWeatherDescription}</h2>
                     </div>
                   </div>
-                <hr style="border: 1px dotted gray;width:600px;margin-bottom: 2rem;">
+                <hr class="border">
                 </div>
                 `
             );
 
             res.write(
               `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
-                  <button type="submit"; name="button" style="font-size:1rem;background-color:#ECF87F;text-decoration:none;padding:10px 32px;border:none;cursor: pointer;">Home</button>
+                  <button type="submit"; name="button" class="home">Home</button>
                   </form>`
             );
 
@@ -756,210 +766,210 @@ app.post("/", function (req, res) {
 
             res.write(
               `
-              <h1 style="font-family:Arial, Helvetica,sans-serif;text-align: center;margin: 4rem 0 0 0;color:#B91646;">
+              <h1 class="title-red" style="margin: 4rem 0 0 0;">
                 Hourly
               </h1>
-              <hr style="border: 1px dotted gray;width:600px">
+              <hr class="border">
               <div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${currentHour} </h3>
+                <div class="hourly-element-center">
+                  <h3 class="hour">${currentHour} </h3>
                   <img style="width:40px;" src=${currentImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${currentTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${currentDescription}</h3>
+                  <h3 class="hourly-description">${currentDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${oneHourLater} </h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${oneHourLater} </h3>
                   <img style="width:40px;" src=${oneHourLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${oneHourLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${oneHourLaterDescription}</h3>
+                  <h3 class="hourly-description"class="hourly-description">${oneHourLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twoHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twoHoursLater}</h3>
                   <img style="width:40px;" src=${twoHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twoHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twoHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twoHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${threeHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${threeHoursLater}</h3>
                   <img style="width:40px;" src=${threeHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${threeHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${threeHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${threeHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${fourHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${fourHoursLater}</h3>
                   <img style="width:40px;" src=${fourHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${fourHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${fourHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${fourHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${fiveHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${fiveHoursLater}</h3>
                   <img style="width:40px;" src=${fiveHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${fiveHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${fiveHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${fiveHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${sixHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${sixHoursLater}</h3>
                   <img style="width:40px;" src=${sixHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${sixHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${sixHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${sixHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${sevenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${sevenHoursLater}</h3>
                   <img style="width:40px;" src=${sevenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${sevenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${sevenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${sevenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${eightHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${eightHoursLater}</h3>
                   <img style="width:40px;" src=${eightHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${eightHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${eightHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${eightHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${nineHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${nineHoursLater}</h3>
                   <img style="width:40px;" src=${nineHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${nineHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${nineHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${nineHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${tenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${tenHoursLater}</h3>
                   <img style="width:40px;" src=${tenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${tenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${tenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${tenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${elevenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${elevenHoursLater}</h3>
                   <img style="width:40px;" src=${elevenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${elevenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${elevenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${elevenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twelveHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twelveHoursLater}</h3>
                   <img style="width:40px;" src=${twelveHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twelveHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twelveHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twelveHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${thirteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${thirteenHoursLater}</h3>
                   <img style="width:40px;" src=${thirteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${thirteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${thirteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${thirteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${fourteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${fourteenHoursLater}</h3>
                   <img style="width:40px;" src=${fourteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${fourteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${fourteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${fourteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${fifteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${fifteenHoursLater}</h3>
                   <img style="width:40px;" src=${fifteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${fifteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${fifteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${fifteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${sixteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${sixteenHoursLater}</h3>
                   <img style="width:40px;" src=${sixteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${sixteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${sixteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${sixteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${seventeenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${seventeenHoursLater}</h3>
                   <img style="width:40px;" src=${seventeenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${seventeenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${seventeenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${seventeenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${eighteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${eighteenHoursLater}</h3>
                   <img style="width:40px;" src=${eighteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${eighteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${eighteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${eighteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${nineteenHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${nineteenHoursLater}</h3>
                   <img style="width:40px;" src=${nineteenHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${nineteenHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${nineteenHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${nineteenHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twentyHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twentyHoursLater}</h3>
                   <img style="width:40px;" src=${twentyHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twentyHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twentyHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twentyHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twentyOneHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twentyOneHoursLater}</h3>
                   <img style="width:40px;" src=${twentyOneHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twentyOneHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twentyOneHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twentyOneHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twentyTwoHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twentyTwoHoursLater}</h3>
                   <img style="width:40px;" src=${twentyTwoHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twentyTwoHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twentyTwoHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twentyTwoHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twentyThreeHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twentyThreeHoursLater}</h3>
                   <img style="width:40px;" src=${twentyThreeHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twentyThreeHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twentyThreeHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twentyThreeHoursLaterDescription}</h3>
                 </div>
-                <div style="display: flex;align-item: center;justify-content: center">
-                  <h3 style="color:blue;font-family:Arial, Helvetica,sans-serif;padding: 0 1rem 0 0;margin: 5px 0 5px 0">${twentyFourHoursLater}</h3>
+                <div class="hourly-element-center"">
+                  <h3 class="hour">${twentyFourHoursLater}</h3>
                   <img style="width:40px;" src=${twentyFourHoursLaterImageURL}>
-                  <h3 style="color:gray;font-family:Arial, Helvetica,sans-serif;text-align:center;margin: 5px 0 5px 0">
+                  <h3 class="hourly-temp">
                   ${twentyFourHoursLaterTemp} &#8451;
                   </h3>
-                  <h3 style="color:darkblue;font-family:Arial, Helvetica,sans-serif;text-align:center;padding: 0 0 0 2rem;margin: 5px 0 5px 0">${twentyFourHoursLaterDescription}</h3>
+                  <h3 class="hourly-description">${twentyFourHoursLaterDescription}</h3>
                 </div>
                 <hr style="border: 1px dotted gray;width:600px;margin-bottom: 2rem;">
               </div>
@@ -968,7 +978,7 @@ app.post("/", function (req, res) {
             res.write(
               `
                 <form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;margin-bottom: 0 0 3rem 0">
-                  <button type="submit"; name="button" style="font-size:1rem;background-color:#ECF87F;text-decoration:none;padding:10px 32px;border:none;cursor: pointer;">Home</button>
+                  <button class="home" type="submit"; name="button">Home</button>
                 </form>
 
               `

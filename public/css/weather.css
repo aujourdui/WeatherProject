@@ -1,0 +1,131 @@
+.city-name {
+  font-size: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 3rem;
+  color: #0c2d48;
+}
+
+.title-red {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: #b91646;
+}
+
+.title-blue {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: darkblue;
+}
+
+.border {
+  border: 1px dotted gray;
+  width: 600px;
+}
+
+.img-current {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+}
+
+.temp {
+  color: gray;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.home {
+  font-size: 1rem;
+  background-color: #ecf87f;
+  text-decoration: none;
+  padding: 10px 32px;
+  border: none;
+  cursor: pointer;
+}
+
+.date {
+  color: blue;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 1rem 0 0;
+  margin: 10px 0 10px 0;
+}
+
+.daily-temp {
+  color: gray;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 10px 0 10px 0;
+}
+
+/* .element-center {
+  display: flex;
+  justify-content: center;
+} */
+
+/* .date {
+  color: blue;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 1rem 0 0;
+  margin: 10px 0 10px 0;
+}
+
+.daily-temp {
+  color: gray;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 10px 0 10px 0;
+} */
+
+.daily-description {
+  color: darkblue;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 0 0 2rem;
+  margin: 10px 0 10px 0;
+}
+
+.daily-element-center {
+  display: flex;
+  margin-left: 5%;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .daily-element-center {
+    margin-left: 32%;
+  }
+}
+
+.hour {
+  color: blue;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 1rem 0 0;
+  margin: 5px 0 5px 0;
+}
+
+.hourly-temp {
+  color: gray;
+  font-family: Arial, Helvetica, sans-serif;
+  /* text-align: center; */
+  margin: 5px 0 5px 0;
+}
+
+.hourly-description {
+  color: darkblue;
+  font-family: Arial, Helvetica, sans-serif;
+  /* text-align: center; */
+  padding: 0 0 0 2rem;
+  margin: 5px 0 5px 0;
+}
+
+.hourly-element-center {
+  display: flex;
+  margin-left: 20%;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .hourly-element-center {
+    margin-left: 40%;
+  }
+}
