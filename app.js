@@ -12,11 +12,11 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.post("/", function (req, res) {
+app.post("/", (req, res) => {
   const originalQuery = req.body.cityName;
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,8 +26,8 @@ app.post("/", function (req, res) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
   // current weather
-  https.get(url, function (response) {
-    response.on("data", function (data) {
+  https.get(url, (response) => {
+    response.on("data", (data) => {
       const weatherData = JSON.parse(data);
       const cityName = weatherData.name;
 
@@ -104,11 +104,29 @@ app.post("/", function (req, res) {
 
         const urlGeo = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=6ead27bdb26041ed3ea800802ff72381`;
 
-        https.get(urlGeo, function (response) {
+        https.get(urlGeo, (response) => {
           let resultData = "";
           response.on("data", (data) => (resultData += data));
           response.on("end", () => {
             const weatherData = JSON.parse(resultData);
+            let tempMinList = [];
+            let tempMaxList = [];
+            let tempDescriptionList = [];
+            let iconList = [];
+            let imageUrlList = [];
+
+            for (let i = 0; i < 8; i++) {
+              tempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
+              tempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
+              tempDescriptionList.push(
+                weatherData.daily[i].weather[0].description
+              );
+              iconList.push(weatherData.daily[i].weather[0].icon);
+              imageUrlList.push(
+                `http://openweathermap.org/img/wn/${weatherData.daily[i].weather[0].icon}@2x.png`
+              );
+            }
+
             const todayTempMin = weatherData.daily[0].temp.min.toFixed(1);
             const todayTempMax = weatherData.daily[0].temp.max.toFixed(1);
             const todayWeatherDescription =
@@ -258,67 +276,67 @@ app.post("/", function (req, res) {
                   <div>
                     <div class="daily-element-center">
                       <h2 class="date">${date} </h2>
-                      <img style="width:60px;" src=${todayWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[0]}>
                       <h2 class="daily-temp">
-                      ${todayTempMax} / ${todayTempMin} &#8451;
+                      ${tempMaxList[0]} / ${tempMinList[0]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${todayWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[0]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${oneDayLaterDate} </h2>
-                      <img style="width:60px;" src=${oneDayLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[1]}>
                       <h2 class="daily-temp">
-                      ${oneDayLaterTempMax} / ${oneDayLaterTempMin} &#8451;
+                      ${tempMaxList[1]} / ${tempMinList[1]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${oneDayLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[1]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date"">${twoDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${twoDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[2]}>
                       <h2 class="daily-temp">
-                      ${twoDaysLaterTempMax} / ${twoDaysLaterTempMin} &#8451;
+                      ${tempMaxList[2]} / ${tempMinList[2]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${twoDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[2]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date"">${threeDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${threeDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[3]}>
                       <h2 class="daily-temp">
-                      ${threeDaysLaterTempMax} / ${threeDaysLaterTempMin} &#8451;
+                      ${tempMaxList[3]} / ${tempMinList[3]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${threeDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[3]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${fourDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${fourDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[4]}>
                       <h2 class="daily-temp">
-                      ${fourDaysLaterTempMax} / ${fourDaysLaterTempMin} &#8451;
+                      ${tempMaxList[4]} / ${tempMinList[4]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${fourDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[4]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${fiveDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${fiveDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[5]}>
                       <h2 class="daily-temp">
-                      ${fiveDaysLaterTempMax} / ${fiveDaysLaterTempMin} &#8451;
+                      ${tempMaxList[5]} / ${tempMinList[5]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${fiveDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[5]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${sixDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${sixDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[6]}>
                       <h2 class="daily-temp">
-                      ${sixDaysLaterTempMax} / ${sixDaysLaterTempMin} &#8451;
+                      ${tempMaxList[6]} / ${tempMinList[6]} &#8451;
                       </h2>
-                      <h2 class="daily-description"">${sixDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${tempDescriptionList[6]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${sevenDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${sevenDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[7]}>
                       <h2 class="daily-temp">
-                      ${sevenDaysLaterTempMax} / ${sevenDaysLaterTempMin} &#8451;
+                      ${tempMaxList[7]} / ${tempMinList[7]} &#8451;
                       </h2>
-                      <h2 class="daily-description"">${sevenDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${tempDescriptionList[7]}</h2>
                     </div>
                   </div>
                 <hr class="border">
