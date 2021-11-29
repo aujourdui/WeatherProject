@@ -130,32 +130,18 @@ app.post("/", (req, res) => {
             }
 
             // get real days
-            const currentDate = new Date();
 
-            const oneDateLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000
-            );
-            const twoDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 2
-            );
-            const threeDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 3
-            );
-            const fourDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 4
-            );
-            const fiveDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 5
-            );
-            const sixDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 6
-            );
-            const sevenDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 7
-            );
+            let daysList = [];
+
+            for (let i = 0; i < 8; i++) {
+              daysList.push(
+                new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * i)
+              );
+            }
+            console.log(daysList);
 
             // get week of days
-            const weekday = new Array(13);
+            const weekday = new Array(8);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
             weekday[2] = "(Tue)";
@@ -163,40 +149,34 @@ app.post("/", (req, res) => {
             weekday[4] = "(Thu)";
             weekday[5] = "(Fri)";
             weekday[6] = "(Sat)";
-            weekday[7] = weekday[0];
-            weekday[8] = weekday[1];
-            weekday[9] = weekday[2];
-            weekday[10] = weekday[3];
-            weekday[11] = weekday[4];
-            weekday[12] = weekday[5];
-            weekday[13] = weekday[6];
+            weekday[7] = "(Sun)";
 
-            const dayOne = weekday[currentDate.getDay()];
-            const dayTwo = weekday[currentDate.getDay() + 1];
-            const dayThree = weekday[currentDate.getDay() + 2];
-            const dayFour = weekday[currentDate.getDay() + 3];
-            const dayFive = weekday[currentDate.getDay() + 4];
-            const daySix = weekday[currentDate.getDay() + 5];
-            const daySeven = weekday[currentDate.getDay() + 6];
+            const dayOne = weekday[daysList[0].getDay()];
+            const dayTwo = weekday[daysList[0].getDay() + 1];
+            const dayThree = weekday[daysList[0].getDay() + 2];
+            const dayFour = weekday[daysList[0].getDay() + 3];
+            const dayFive = weekday[daysList[0].getDay() + 4];
+            const daySix = weekday[daysList[0].getDay() + 5];
+            const daySeven = weekday[daysList[0].getDay() + 6];
 
-            const monthByToday = currentDate.getMonth() + 1;
-            const monthByOneDayLater = oneDateLater.getMonth() + 1;
-            const monthByTwoDaysLater = twoDatesLater.getMonth() + 1;
-            const monthByThreeDaysLater = threeDatesLater.getMonth() + 1;
-            const monthByFourDaysLater = fourDatesLater.getMonth() + 1;
-            const monthByFiveDaysLater = fiveDatesLater.getMonth() + 1;
-            const monthBySixDaysLater = sixDatesLater.getMonth() + 1;
-            const monthBySevenDaysLater = sevenDatesLater.getMonth() + 1;
+            const monthByToday = daysList[0].getMonth() + 1;
+            const monthByOneDayLater = daysList[1].getMonth() + 1;
+            const monthByTwoDaysLater = daysList[2].getMonth() + 1;
+            const monthByThreeDaysLater = daysList[3].getMonth() + 1;
+            const monthByFourDaysLater = daysList[4].getMonth() + 1;
+            const monthByFiveDaysLater = daysList[5].getMonth() + 1;
+            const monthBySixDaysLater = daysList[6].getMonth() + 1;
+            const monthBySevenDaysLater = daysList[7].getMonth() + 1;
 
-            const day = currentDate.getDate();
-            const oneDayLater = oneDateLater.getDate();
-            const twoDaysLater = twoDatesLater.getDate();
+            const day = daysList[0].getDate();
+            const oneDayLater = daysList[1].getDate();
+            const twoDaysLater = daysList[2].getDate();
             console.log(twoDaysLater);
-            const threeDaysLater = threeDatesLater.getDate();
-            const fourDaysLater = fourDatesLater.getDate();
-            const fiveDaysLater = fiveDatesLater.getDate();
-            const sixDaysLater = sixDatesLater.getDate();
-            const sevenDaysLater = sevenDatesLater.getDate();
+            const threeDaysLater = daysList[3].getDate();
+            const fourDaysLater = daysList[4].getDate();
+            const fiveDaysLater = daysList[5].getDate();
+            const sixDaysLater = daysList[6].getDate();
+            const sevenDaysLater = daysList[7].getDate();
 
             const date = `${monthByToday}/${day}${dayOne}`;
             const oneDayLaterDate = `${monthByOneDayLater}/${oneDayLater}${dayTwo}`;
@@ -453,7 +433,7 @@ app.post("/", (req, res) => {
             const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
 
             // get am/pm time
-            let hours = currentDate.getHours();
+            let hours = daysList[0].getHours();
             const ampm = hours >= 12 ? "pm" : "am";
             hours = hours % 12;
             hours = hours ? hours : 12;
