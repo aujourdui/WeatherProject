@@ -110,19 +110,17 @@ app.post("/", (req, res) => {
           response.on("end", () => {
             const weatherData = JSON.parse(resultData);
 
-            // create data lists
-            let tempMinList = [];
-            let tempMaxList = [];
-            let tempDescriptionList = [];
-            let iconList = [];
-            let imageUrlList = [];
+            // create daily data lists
+            let dailyTempMinList = [];
+            let dailyTempMaxList = [];
+            let dailyTempDescriptionList = [];
+            let dailyIconList = [];
+            let dailyImageUrlList = [];
 
             let datesList = [];
             let monthsList = [];
             let daysList = [];
             let refinedDatesList = [];
-
-            let dailyElementList = [];
 
             const weekday = new Array(8);
             weekday[0] = "(Sun)";
@@ -134,14 +132,16 @@ app.post("/", (req, res) => {
             weekday[6] = "(Sat)";
             weekday[7] = "(Sun)";
 
+            let dailyElementList = [];
+
             for (let i = 0; i < 8; i++) {
-              tempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
-              tempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
-              tempDescriptionList.push(
+              dailyTempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
+              dailyTempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
+              dailyTempDescriptionList.push(
                 weatherData.daily[i].weather[0].description
               );
-              iconList.push(weatherData.daily[i].weather[0].icon);
-              imageUrlList.push(
+              dailyIconList.push(weatherData.daily[i].weather[0].icon);
+              dailyImageUrlList.push(
                 `http://openweathermap.org/img/wn/${weatherData.daily[i].weather[0].icon}@2x.png`
               );
               datesList.push(
@@ -157,16 +157,17 @@ app.post("/", (req, res) => {
                 `
                     <div class="daily-element-center">
                     <h2 class="date">${refinedDatesList[i]} </h2>
-                    <img style="width:60px;" src=${imageUrlList[i]}>
+                    <img style="width:60px;" src=${dailyImageUrlList[i]}>
                     <h2 class="daily-temp">
-                    ${tempMaxList[i]} / ${tempMinList[i]} &#8451;
+                    ${dailyTempMaxList[i]} / ${dailyTempMinList[i]} &#8451;
                     </h2>
-                    <h2 class="daily-description">${tempDescriptionList[i]}</h2>
+                    <h2 class="daily-description">${dailyTempDescriptionList[i]}</h2>
                     </div>
                   `
               );
             }
 
+            // display daily data lists
             res.write(
               `
                 <h1 class="title-red" style="margin: 4rem 0 0 0">
@@ -198,414 +199,492 @@ app.post("/", (req, res) => {
             );
 
             // hourly weather
-            const currentTemp = weatherData.hourly[0].temp.toFixed(1);
-            const currentDescription =
-              weatherData.hourly[0].weather[0].description;
-            const currentWeatherIcon = weatherData.hourly[0].weather[0].icon;
-            const currentImageURL = `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
-            const oneHourLaterTemp = weatherData.hourly[1].temp.toFixed(1);
-            const oneHourLaterDescription =
-              weatherData.hourly[1].weather[0].description;
-            const oneHourLaterWeatherIcon =
-              weatherData.hourly[1].weather[0].icon;
-            const oneHourLaterImageURL = `http://openweathermap.org/img/wn/${oneHourLaterWeatherIcon}@2x.png`;
-            const twoHoursLaterTemp = weatherData.hourly[2].temp.toFixed(1);
-            const twoHoursLaterDescription =
-              weatherData.hourly[2].weather[0].description;
-            const twoHoursLaterWeatherIcon =
-              weatherData.hourly[2].weather[0].icon;
-            const twoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twoHoursLaterWeatherIcon}@2x.png`;
-            const threeHoursLaterTemp = weatherData.hourly[3].temp.toFixed(1);
-            const threeHoursLaterDescription =
-              weatherData.hourly[3].weather[0].description;
-            const threeHoursLaterWeatherIcon =
-              weatherData.hourly[3].weather[0].icon;
-            const threeHoursLaterImageURL = `http://openweathermap.org/img/wn/${threeHoursLaterWeatherIcon}@2x.png`;
-            const fourHoursLaterTemp = weatherData.hourly[4].temp.toFixed(1);
-            const fourHoursLaterDescription =
-              weatherData.hourly[4].weather[0].description;
-            const fourHoursLaterWeatherIcon =
-              weatherData.hourly[4].weather[0].icon;
-            const fourHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourHoursLaterWeatherIcon}@2x.png`;
-            const fiveHoursLaterTemp = weatherData.hourly[5].temp.toFixed(1);
-            const fiveHoursLaterDescription =
-              weatherData.hourly[5].weather[0].description;
-            const fiveHoursLaterWeatherIcon =
-              weatherData.hourly[5].weather[0].icon;
-            const fiveHoursLaterImageURL = `http://openweathermap.org/img/wn/${fiveHoursLaterWeatherIcon}@2x.png`;
-            const sixHoursLaterTemp = weatherData.hourly[6].temp.toFixed(1);
-            const sixHoursLaterDescription =
-              weatherData.hourly[6].weather[0].description;
-            const sixHoursLaterWeatherIcon =
-              weatherData.hourly[6].weather[0].icon;
-            const sixHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixHoursLaterWeatherIcon}@2x.png`;
-            const sevenHoursLaterTemp = weatherData.hourly[7].temp.toFixed(1);
-            const sevenHoursLaterDescription =
-              weatherData.hourly[7].weather[0].description;
-            const sevenHoursLaterWeatherIcon =
-              weatherData.hourly[7].weather[0].icon;
-            const sevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sevenHoursLaterWeatherIcon}@2x.png`;
-            const eightHoursLaterTemp = weatherData.hourly[8].temp.toFixed(1);
-            const eightHoursLaterDescription =
-              weatherData.hourly[8].weather[0].description;
-            const eightHoursLaterWeatherIcon =
-              weatherData.hourly[8].weather[0].icon;
-            const eightHoursLaterImageURL = `http://openweathermap.org/img/wn/${eightHoursLaterWeatherIcon}@2x.png`;
-            const nineHoursLaterTemp = weatherData.hourly[9].temp.toFixed(1);
-            const nineHoursLaterDescription =
-              weatherData.hourly[9].weather[0].description;
-            const nineHoursLaterWeatherIcon =
-              weatherData.hourly[9].weather[0].icon;
-            const nineHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineHoursLaterWeatherIcon}@2x.png`;
-            const tenHoursLaterTemp = weatherData.hourly[10].temp.toFixed(1);
-            const tenHoursLaterDescription =
-              weatherData.hourly[10].weather[0].description;
-            const tenHoursLaterWeatherIcon =
-              weatherData.hourly[10].weather[0].icon;
-            const tenHoursLaterImageURL = `http://openweathermap.org/img/wn/${tenHoursLaterWeatherIcon}@2x.png`;
-            const elevenHoursLaterTemp = weatherData.hourly[11].temp.toFixed(1);
-            const elevenHoursLaterDescription =
-              weatherData.hourly[11].weather[0].description;
-            const elevenHoursLaterWeatherIcon =
-              weatherData.hourly[11].weather[0].icon;
-            const elevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${elevenHoursLaterWeatherIcon}@2x.png`;
-            const twelveHoursLaterTemp = weatherData.hourly[12].temp.toFixed(1);
-            const twelveHoursLaterDescription =
-              weatherData.hourly[12].weather[0].description;
-            const twelveHoursLaterWeatherIcon =
-              weatherData.hourly[12].weather[0].icon;
-            const twelveHoursLaterImageURL = `http://openweathermap.org/img/wn/${twelveHoursLaterWeatherIcon}@2x.png`;
-            const thirteenHoursLaterTemp =
-              weatherData.hourly[13].temp.toFixed(1);
-            const thirteenHoursLaterDescription =
-              weatherData.hourly[13].weather[0].description;
-            const thirteenHoursLaterWeatherIcon =
-              weatherData.hourly[13].weather[0].icon;
-            const thirteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${thirteenHoursLaterWeatherIcon}@2x.png`;
-            const fourteenHoursLaterTemp =
-              weatherData.hourly[14].temp.toFixed(1);
-            const fourteenHoursLaterDescription =
-              weatherData.hourly[14].weather[0].description;
-            const fourteenHoursLaterWeatherIcon =
-              weatherData.hourly[14].weather[0].icon;
-            const fourteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourteenHoursLaterWeatherIcon}@2x.png`;
-            const fifteenHoursLaterTemp =
-              weatherData.hourly[15].temp.toFixed(1);
-            const fifteenHoursLaterDescription =
-              weatherData.hourly[15].weather[0].description;
-            const fifteenHoursLaterWeatherIcon =
-              weatherData.hourly[15].weather[0].icon;
-            const fifteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fifteenHoursLaterWeatherIcon}@2x.png`;
-            const sixteenHoursLaterTemp =
-              weatherData.hourly[16].temp.toFixed(1);
-            const sixteenHoursLaterDescription =
-              weatherData.hourly[16].weather[0].description;
-            const sixteenHoursLaterWeatherIcon =
-              weatherData.hourly[16].weather[0].icon;
-            const sixteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixteenHoursLaterWeatherIcon}@2x.png`;
-            const seventeenHoursLaterTemp =
-              weatherData.hourly[17].temp.toFixed(1);
-            const seventeenHoursLaterDescription =
-              weatherData.hourly[17].weather[0].description;
-            const seventeenHoursLaterWeatherIcon =
-              weatherData.hourly[17].weather[0].icon;
-            const seventeenHoursLaterImageURL = `http://openweathermap.org/img/wn/${seventeenHoursLaterWeatherIcon}@2x.png`;
-            const eighteenHoursLaterTemp =
-              weatherData.hourly[18].temp.toFixed(1);
-            const eighteenHoursLaterDescription =
-              weatherData.hourly[18].weather[0].description;
-            const eighteenHoursLaterWeatherIcon =
-              weatherData.hourly[18].weather[0].icon;
-            const eighteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${eighteenHoursLaterWeatherIcon}@2x.png`;
-            const nineteenHoursLaterTemp =
-              weatherData.hourly[19].temp.toFixed(1);
-            const nineteenHoursLaterDescription =
-              weatherData.hourly[19].weather[0].description;
-            const nineteenHoursLaterWeatherIcon =
-              weatherData.hourly[19].weather[0].icon;
-            const nineteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineteenHoursLaterWeatherIcon}@2x.png`;
-            const twentyHoursLaterTemp = weatherData.hourly[20].temp.toFixed(1);
-            const twentyHoursLaterDescription =
-              weatherData.hourly[20].weather[0].description;
-            const twentyHoursLaterWeatherIcon =
-              weatherData.hourly[20].weather[0].icon;
-            const twentyHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyHoursLaterWeatherIcon}@2x.png`;
-            const twentyOneHoursLaterTemp =
-              weatherData.hourly[21].temp.toFixed(1);
-            const twentyOneHoursLaterDescription =
-              weatherData.hourly[21].weather[0].description;
-            const twentyOneHoursLaterWeatherIcon =
-              weatherData.hourly[21].weather[0].icon;
-            const twentyOneHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyOneHoursLaterWeatherIcon}@2x.png`;
-            const twentyTwoHoursLaterTemp =
-              weatherData.hourly[22].temp.toFixed(1);
-            const twentyTwoHoursLaterDescription =
-              weatherData.hourly[22].weather[0].description;
-            const twentyTwoHoursLaterWeatherIcon =
-              weatherData.hourly[22].weather[0].icon;
-            const twentyTwoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyTwoHoursLaterWeatherIcon}@2x.png`;
-            const twentyThreeHoursLaterTemp =
-              weatherData.hourly[23].temp.toFixed(1);
-            const twentyThreeHoursLaterDescription =
-              weatherData.hourly[23].weather[0].description;
-            const twentyThreeHoursLaterWeatherIcon =
-              weatherData.hourly[23].weather[0].icon;
-            const twentyThreeHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyThreeHoursLaterWeatherIcon}@2x.png`;
-            const twentyFourHoursLaterTemp =
-              weatherData.hourly[24].temp.toFixed(1);
-            const twentyFourHoursLaterDescription =
-              weatherData.hourly[24].weather[0].description;
-            const twentyFourHoursLaterWeatherIcon =
-              weatherData.hourly[24].weather[0].icon;
-            const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
+
+            // create hourly data list
+            // let hourlyTempList = [];
+            // let hourlyDescriptionList = [];
+            // let hourlyIconList = [];
+            // let hourlyImageUrlList = [];
+
+            // for (let i = 0; i < 24; i++) {
+            //   hourlyTempList.push(weatherData.hourly[i].temp.toFixed(1));
+            //   hourlyDescriptionList.push(
+            //     weatherData.hourly[i].weather[0].description
+            //   );
+            //   hourlyIconList.push(weatherData.hourly[i].weather[0].icon);
+            //   hourlyImageUrlList.push(
+            //     `http://openweathermap.org/img/wn/${weatherData.hourly[i].weather[0].icon}@2x.png`
+            //   );
+            // }
+
+            // const currentTemp = weatherData.hourly[0].temp.toFixed(1);
+            // const currentDescription =
+            //   weatherData.hourly[0].weather[0].description;
+            // const currentWeatherIcon = weatherData.hourly[0].weather[0].icon;
+            // const currentImageURL = `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
+            // const oneHourLaterTemp = weatherData.hourly[1].temp.toFixed(1);
+            // const oneHourLaterDescription =
+            //   weatherData.hourly[1].weather[0].description;
+            // const oneHourLaterWeatherIcon =
+            //   weatherData.hourly[1].weather[0].icon;
+            // const oneHourLaterImageURL = `http://openweathermap.org/img/wn/${oneHourLaterWeatherIcon}@2x.png`;
+            // const twoHoursLaterTemp = weatherData.hourly[2].temp.toFixed(1);
+            // const twoHoursLaterDescription =
+            //   weatherData.hourly[2].weather[0].description;
+            // const twoHoursLaterWeatherIcon =
+            //   weatherData.hourly[2].weather[0].icon;
+            // const twoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twoHoursLaterWeatherIcon}@2x.png`;
+            // const threeHoursLaterTemp = weatherData.hourly[3].temp.toFixed(1);
+            // const threeHoursLaterDescription =
+            //   weatherData.hourly[3].weather[0].description;
+            // const threeHoursLaterWeatherIcon =
+            //   weatherData.hourly[3].weather[0].icon;
+            // const threeHoursLaterImageURL = `http://openweathermap.org/img/wn/${threeHoursLaterWeatherIcon}@2x.png`;
+            // const fourHoursLaterTemp = weatherData.hourly[4].temp.toFixed(1);
+            // const fourHoursLaterDescription =
+            //   weatherData.hourly[4].weather[0].description;
+            // const fourHoursLaterWeatherIcon =
+            //   weatherData.hourly[4].weather[0].icon;
+            // const fourHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourHoursLaterWeatherIcon}@2x.png`;
+            // const fiveHoursLaterTemp = weatherData.hourly[5].temp.toFixed(1);
+            // const fiveHoursLaterDescription =
+            //   weatherData.hourly[5].weather[0].description;
+            // const fiveHoursLaterWeatherIcon =
+            //   weatherData.hourly[5].weather[0].icon;
+            // const fiveHoursLaterImageURL = `http://openweathermap.org/img/wn/${fiveHoursLaterWeatherIcon}@2x.png`;
+            // const sixHoursLaterTemp = weatherData.hourly[6].temp.toFixed(1);
+            // const sixHoursLaterDescription =
+            //   weatherData.hourly[6].weather[0].description;
+            // const sixHoursLaterWeatherIcon =
+            //   weatherData.hourly[6].weather[0].icon;
+            // const sixHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixHoursLaterWeatherIcon}@2x.png`;
+            // const sevenHoursLaterTemp = weatherData.hourly[7].temp.toFixed(1);
+            // const sevenHoursLaterDescription =
+            //   weatherData.hourly[7].weather[0].description;
+            // const sevenHoursLaterWeatherIcon =
+            //   weatherData.hourly[7].weather[0].icon;
+            // const sevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sevenHoursLaterWeatherIcon}@2x.png`;
+            // const eightHoursLaterTemp = weatherData.hourly[8].temp.toFixed(1);
+            // const eightHoursLaterDescription =
+            //   weatherData.hourly[8].weather[0].description;
+            // const eightHoursLaterWeatherIcon =
+            //   weatherData.hourly[8].weather[0].icon;
+            // const eightHoursLaterImageURL = `http://openweathermap.org/img/wn/${eightHoursLaterWeatherIcon}@2x.png`;
+            // const nineHoursLaterTemp = weatherData.hourly[9].temp.toFixed(1);
+            // const nineHoursLaterDescription =
+            //   weatherData.hourly[9].weather[0].description;
+            // const nineHoursLaterWeatherIcon =
+            //   weatherData.hourly[9].weather[0].icon;
+            // const nineHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineHoursLaterWeatherIcon}@2x.png`;
+            // const tenHoursLaterTemp = weatherData.hourly[10].temp.toFixed(1);
+            // const tenHoursLaterDescription =
+            //   weatherData.hourly[10].weather[0].description;
+            // const tenHoursLaterWeatherIcon =
+            //   weatherData.hourly[10].weather[0].icon;
+            // const tenHoursLaterImageURL = `http://openweathermap.org/img/wn/${tenHoursLaterWeatherIcon}@2x.png`;
+            // const elevenHoursLaterTemp = weatherData.hourly[11].temp.toFixed(1);
+            // const elevenHoursLaterDescription =
+            //   weatherData.hourly[11].weather[0].description;
+            // const elevenHoursLaterWeatherIcon =
+            //   weatherData.hourly[11].weather[0].icon;
+            // const elevenHoursLaterImageURL = `http://openweathermap.org/img/wn/${elevenHoursLaterWeatherIcon}@2x.png`;
+            // const twelveHoursLaterTemp = weatherData.hourly[12].temp.toFixed(1);
+            // const twelveHoursLaterDescription =
+            //   weatherData.hourly[12].weather[0].description;
+            // const twelveHoursLaterWeatherIcon =
+            //   weatherData.hourly[12].weather[0].icon;
+            // const twelveHoursLaterImageURL = `http://openweathermap.org/img/wn/${twelveHoursLaterWeatherIcon}@2x.png`;
+            // const thirteenHoursLaterTemp =
+            //   weatherData.hourly[13].temp.toFixed(1);
+            // const thirteenHoursLaterDescription =
+            //   weatherData.hourly[13].weather[0].description;
+            // const thirteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[13].weather[0].icon;
+            // const thirteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${thirteenHoursLaterWeatherIcon}@2x.png`;
+            // const fourteenHoursLaterTemp =
+            //   weatherData.hourly[14].temp.toFixed(1);
+            // const fourteenHoursLaterDescription =
+            //   weatherData.hourly[14].weather[0].description;
+            // const fourteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[14].weather[0].icon;
+            // const fourteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fourteenHoursLaterWeatherIcon}@2x.png`;
+            // const fifteenHoursLaterTemp =
+            //   weatherData.hourly[15].temp.toFixed(1);
+            // const fifteenHoursLaterDescription =
+            //   weatherData.hourly[15].weather[0].description;
+            // const fifteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[15].weather[0].icon;
+            // const fifteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${fifteenHoursLaterWeatherIcon}@2x.png`;
+            // const sixteenHoursLaterTemp =
+            //   weatherData.hourly[16].temp.toFixed(1);
+            // const sixteenHoursLaterDescription =
+            //   weatherData.hourly[16].weather[0].description;
+            // const sixteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[16].weather[0].icon;
+            // const sixteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${sixteenHoursLaterWeatherIcon}@2x.png`;
+            // const seventeenHoursLaterTemp =
+            //   weatherData.hourly[17].temp.toFixed(1);
+            // const seventeenHoursLaterDescription =
+            //   weatherData.hourly[17].weather[0].description;
+            // const seventeenHoursLaterWeatherIcon =
+            //   weatherData.hourly[17].weather[0].icon;
+            // const seventeenHoursLaterImageURL = `http://openweathermap.org/img/wn/${seventeenHoursLaterWeatherIcon}@2x.png`;
+            // const eighteenHoursLaterTemp =
+            //   weatherData.hourly[18].temp.toFixed(1);
+            // const eighteenHoursLaterDescription =
+            //   weatherData.hourly[18].weather[0].description;
+            // const eighteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[18].weather[0].icon;
+            // const eighteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${eighteenHoursLaterWeatherIcon}@2x.png`;
+            // const nineteenHoursLaterTemp =
+            //   weatherData.hourly[19].temp.toFixed(1);
+            // const nineteenHoursLaterDescription =
+            //   weatherData.hourly[19].weather[0].description;
+            // const nineteenHoursLaterWeatherIcon =
+            //   weatherData.hourly[19].weather[0].icon;
+            // const nineteenHoursLaterImageURL = `http://openweathermap.org/img/wn/${nineteenHoursLaterWeatherIcon}@2x.png`;
+            // const twentyHoursLaterTemp = weatherData.hourly[20].temp.toFixed(1);
+            // const twentyHoursLaterDescription =
+            //   weatherData.hourly[20].weather[0].description;
+            // const twentyHoursLaterWeatherIcon =
+            //   weatherData.hourly[20].weather[0].icon;
+            // const twentyHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyHoursLaterWeatherIcon}@2x.png`;
+            // const twentyOneHoursLaterTemp =
+            //   weatherData.hourly[21].temp.toFixed(1);
+            // const twentyOneHoursLaterDescription =
+            //   weatherData.hourly[21].weather[0].description;
+            // const twentyOneHoursLaterWeatherIcon =
+            //   weatherData.hourly[21].weather[0].icon;
+            // const twentyOneHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyOneHoursLaterWeatherIcon}@2x.png`;
+            // const twentyTwoHoursLaterTemp =
+            //   weatherData.hourly[22].temp.toFixed(1);
+            // const twentyTwoHoursLaterDescription =
+            //   weatherData.hourly[22].weather[0].description;
+            // const twentyTwoHoursLaterWeatherIcon =
+            //   weatherData.hourly[22].weather[0].icon;
+            // const twentyTwoHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyTwoHoursLaterWeatherIcon}@2x.png`;
+            // const twentyThreeHoursLaterTemp =
+            //   weatherData.hourly[23].temp.toFixed(1);
+            // const twentyThreeHoursLaterDescription =
+            //   weatherData.hourly[23].weather[0].description;
+            // const twentyThreeHoursLaterWeatherIcon =
+            //   weatherData.hourly[23].weather[0].icon;
+            // const twentyThreeHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyThreeHoursLaterWeatherIcon}@2x.png`;
+            // const twentyFourHoursLaterTemp =
+            //   weatherData.hourly[24].temp.toFixed(1);
+            // const twentyFourHoursLaterDescription =
+            //   weatherData.hourly[24].weather[0].description;
+            // const twentyFourHoursLaterWeatherIcon =
+            //   weatherData.hourly[24].weather[0].icon;
+            // const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
+
+            // let hourlyTempList = [];
+            // let hourlyDescriptionList = [];
+            // let hourlyIconList = [];
+            // let hourlyImageUrlList = [];
+
+            // for (let i = 0; i < 24; i++) {
+            //   hourlyTempList.push(weatherData.hourly[i].temp.toFixed(1));
+            //   hourlyDescriptionList.push(
+            //     weatherData.hourly[i].weather[0].description
+            //   );
+            //   hourlyIconList.push(weatherData.hourly[i].weather[0].icon);
+            //   hourlyImageUrlList.push(
+            //     `http://openweathermap.org/img/wn/${weatherData.hourly[i].weather[0].icon}@2x.png`
+            //   );
+            // }
 
             // get am/pm time
-            let hours = datesList[0].getHours();
-            const ampm = hours >= 12 ? "pm" : "am";
-            hours = hours % 12;
-            hours = hours ? hours : 12;
+            // let ampmList = [];
+            // let ampmHourList = [];
 
-            const setOneHourLater = new Date();
-            setOneHourLater.setHours(setOneHourLater.getHours() + 1);
-            let getOneHourLater = setOneHourLater.getHours();
-            const ampmOne = getOneHourLater >= 12 ? "pm" : "am";
-            getOneHourLater = getOneHourLater % 12;
-            getOneHourLater = getOneHourLater ? getOneHourLater : 12;
+            // for (let i = 0; i < 24; i++) {
+            //   let hours = datesList[0].getHours() + i;
+            //   ampmList.push(hours >= 12 ? "pm" : "am");
+            //   hours = hours % 12;
+            //   hours = hours ? hours : 12;
+            //   ampmHourList.push(hours);
+            // }
 
-            const setTwoHoursLater = new Date();
-            setTwoHoursLater.setHours(setTwoHoursLater.getHours() + 2);
-            let getTwoHoursLater = setTwoHoursLater.getHours();
-            const ampmTwo = getTwoHoursLater >= 12 ? "pm" : "am";
-            getTwoHoursLater = getTwoHoursLater % 12;
-            getTwoHoursLater = getTwoHoursLater ? getTwoHoursLater : 12;
+            // ;
+            // new Date().getHours() >= 12 ? "pm" : "am";
+            // new Date().getHours() = new Date().getHours() % 12
+            // new Date().getHours() = new Date().getHours() ? new Date().getHours() : 12
+            // }
+            // console.log(new Date().getHours())
+            // let hours = datesList[0].getHours();
+            // const ampm = hours >= 12 ? "pm" : "am";
+            // hours = hours % 12;
+            // hours = hours ? hours : 12;
 
-            const setThreeHoursLater = new Date();
-            setThreeHoursLater.setHours(setThreeHoursLater.getHours() + 3);
-            let getThreeHoursLater = setThreeHoursLater.getHours();
-            const ampmThree = getThreeHoursLater >= 12 ? "pm" : "am";
-            getThreeHoursLater = getThreeHoursLater % 12;
-            getThreeHoursLater = getThreeHoursLater ? getThreeHoursLater : 12;
+            // const setOneHourLater = new Date();
+            // setOneHourLater.setHours(setOneHourLater.getHours() + 1);
+            // let getOneHourLater = setOneHourLater.getHours();
+            // const ampmOne = getOneHourLater >= 12 ? "pm" : "am";
+            // getOneHourLater = getOneHourLater % 12;
+            // getOneHourLater = getOneHourLater ? getOneHourLater : 12;
 
-            const setFourHoursLater = new Date();
-            setFourHoursLater.setHours(setFourHoursLater.getHours() + 4);
-            let getFourHoursLater = setFourHoursLater.getHours();
-            const ampmFour = getFourHoursLater >= 12 ? "pm" : "am";
-            getFourHoursLater = getFourHoursLater % 12;
-            getFourHoursLater = getFourHoursLater ? getFourHoursLater : 12;
+            // const setTwoHoursLater = new Date();
+            // setTwoHoursLater.setHours(setTwoHoursLater.getHours() + 2);
+            // let getTwoHoursLater = setTwoHoursLater.getHours();
+            // const ampmTwo = getTwoHoursLater >= 12 ? "pm" : "am";
+            // getTwoHoursLater = getTwoHoursLater % 12;
+            // getTwoHoursLater = getTwoHoursLater ? getTwoHoursLater : 12;
 
-            const setFiveHoursLater = new Date();
-            setFiveHoursLater.setHours(setFiveHoursLater.getHours() + 5);
-            let getFiveHoursLater = setFiveHoursLater.getHours();
-            const ampmFive = getFiveHoursLater >= 12 ? "pm" : "am";
-            getFiveHoursLater = getFiveHoursLater % 12;
-            getFiveHoursLater = getFiveHoursLater ? getFiveHoursLater : 12;
+            // const setThreeHoursLater = new Date();
+            // setThreeHoursLater.setHours(setThreeHoursLater.getHours() + 3);
+            // let getThreeHoursLater = setThreeHoursLater.getHours();
+            // const ampmThree = getThreeHoursLater >= 12 ? "pm" : "am";
+            // getThreeHoursLater = getThreeHoursLater % 12;
+            // getThreeHoursLater = getThreeHoursLater ? getThreeHoursLater : 12;
 
-            const setSixHoursLater = new Date();
-            setSixHoursLater.setHours(setSixHoursLater.getHours() + 6);
-            let getSixHoursLater = setSixHoursLater.getHours();
-            const ampmSix = getSixHoursLater >= 12 ? "pm" : "am";
-            getSixHoursLater = getSixHoursLater % 12;
-            getSixHoursLater = getSixHoursLater ? getSixHoursLater : 12;
+            // const setFourHoursLater = new Date();
+            // setFourHoursLater.setHours(setFourHoursLater.getHours() + 4);
+            // let getFourHoursLater = setFourHoursLater.getHours();
+            // const ampmFour = getFourHoursLater >= 12 ? "pm" : "am";
+            // getFourHoursLater = getFourHoursLater % 12;
+            // getFourHoursLater = getFourHoursLater ? getFourHoursLater : 12;
 
-            const setSevenHoursLater = new Date();
-            setSevenHoursLater.setHours(setSevenHoursLater.getHours() + 7);
-            let getSevenHoursLater = setSevenHoursLater.getHours();
-            const ampmSeven = getSevenHoursLater >= 12 ? "pm" : "am";
-            getSevenHoursLater = getSevenHoursLater % 12;
-            getSevenHoursLater = getSevenHoursLater ? getSevenHoursLater : 12;
+            // const setFiveHoursLater = new Date();
+            // setFiveHoursLater.setHours(setFiveHoursLater.getHours() + 5);
+            // let getFiveHoursLater = setFiveHoursLater.getHours();
+            // const ampmFive = getFiveHoursLater >= 12 ? "pm" : "am";
+            // getFiveHoursLater = getFiveHoursLater % 12;
+            // getFiveHoursLater = getFiveHoursLater ? getFiveHoursLater : 12;
 
-            const setEightHoursLater = new Date();
-            setEightHoursLater.setHours(setEightHoursLater.getHours() + 8);
-            let getEightHoursLater = setEightHoursLater.getHours();
-            const ampmEight = getEightHoursLater >= 12 ? "pm" : "am";
-            getEightHoursLater = getEightHoursLater % 12;
-            getEightHoursLater = getEightHoursLater ? getEightHoursLater : 12;
+            // const setSixHoursLater = new Date();
+            // setSixHoursLater.setHours(setSixHoursLater.getHours() + 6);
+            // let getSixHoursLater = setSixHoursLater.getHours();
+            // const ampmSix = getSixHoursLater >= 12 ? "pm" : "am";
+            // getSixHoursLater = getSixHoursLater % 12;
+            // getSixHoursLater = getSixHoursLater ? getSixHoursLater : 12;
 
-            const setNineHoursLater = new Date();
-            setNineHoursLater.setHours(setNineHoursLater.getHours() + 9);
-            let getNineHoursLater = setNineHoursLater.getHours();
-            const ampmNine = getNineHoursLater >= 12 ? "pm" : "am";
-            getNineHoursLater = getNineHoursLater % 12;
-            getNineHoursLater = getNineHoursLater ? getNineHoursLater : 12;
+            // const setSevenHoursLater = new Date();
+            // setSevenHoursLater.setHours(setSevenHoursLater.getHours() + 7);
+            // let getSevenHoursLater = setSevenHoursLater.getHours();
+            // const ampmSeven = getSevenHoursLater >= 12 ? "pm" : "am";
+            // getSevenHoursLater = getSevenHoursLater % 12;
+            // getSevenHoursLater = getSevenHoursLater ? getSevenHoursLater : 12;
 
-            const setTenHoursLater = new Date();
-            setTenHoursLater.setHours(setTenHoursLater.getHours() + 10);
-            let getTenHoursLater = setTenHoursLater.getHours();
-            const ampmTen = getTenHoursLater >= 12 ? "pm" : "am";
-            getTenHoursLater = getTenHoursLater % 12;
-            getTenHoursLater = getTenHoursLater ? getTenHoursLater : 12;
+            // const setEightHoursLater = new Date();
+            // setEightHoursLater.setHours(setEightHoursLater.getHours() + 8);
+            // let getEightHoursLater = setEightHoursLater.getHours();
+            // const ampmEight = getEightHoursLater >= 12 ? "pm" : "am";
+            // getEightHoursLater = getEightHoursLater % 12;
+            // getEightHoursLater = getEightHoursLater ? getEightHoursLater : 12;
 
-            const setElevenHoursLater = new Date();
-            setElevenHoursLater.setHours(setElevenHoursLater.getHours() + 11);
-            let getElevenHoursLater = setElevenHoursLater.getHours();
-            const ampmEleven = getElevenHoursLater >= 12 ? "pm" : "am";
-            getElevenHoursLater = getElevenHoursLater % 12;
-            getElevenHoursLater = getElevenHoursLater
-              ? getElevenHoursLater
-              : 12;
+            // const setNineHoursLater = new Date();
+            // setNineHoursLater.setHours(setNineHoursLater.getHours() + 9);
+            // let getNineHoursLater = setNineHoursLater.getHours();
+            // const ampmNine = getNineHoursLater >= 12 ? "pm" : "am";
+            // getNineHoursLater = getNineHoursLater % 12;
+            // getNineHoursLater = getNineHoursLater ? getNineHoursLater : 12;
 
-            const setTwelveHoursLater = new Date();
-            setTwelveHoursLater.setHours(setTwelveHoursLater.getHours() + 12);
-            let getTwelveHoursLater = setTwelveHoursLater.getHours();
-            const ampmTwelve = getTwelveHoursLater >= 12 ? "pm" : "am";
-            getTwelveHoursLater = getTwelveHoursLater % 12;
-            getTwelveHoursLater = getTwelveHoursLater
-              ? getTwelveHoursLater
-              : 12;
+            // const setTenHoursLater = new Date();
+            // setTenHoursLater.setHours(setTenHoursLater.getHours() + 10);
+            // let getTenHoursLater = setTenHoursLater.getHours();
+            // const ampmTen = getTenHoursLater >= 12 ? "pm" : "am";
+            // getTenHoursLater = getTenHoursLater % 12;
+            // getTenHoursLater = getTenHoursLater ? getTenHoursLater : 12;
 
-            const setThirteenHoursLater = new Date();
-            setThirteenHoursLater.setHours(
-              setThirteenHoursLater.getHours() + 13
-            );
-            let getThirteenHoursLater = setThirteenHoursLater.getHours();
-            const ampmThirteen = getThirteenHoursLater >= 12 ? "pm" : "am";
-            getThirteenHoursLater = getThirteenHoursLater % 12;
-            getThirteenHoursLater = getThirteenHoursLater
-              ? getThirteenHoursLater
-              : 12;
+            // const setElevenHoursLater = new Date();
+            // setElevenHoursLater.setHours(setElevenHoursLater.getHours() + 11);
+            // let getElevenHoursLater = setElevenHoursLater.getHours();
+            // const ampmEleven = getElevenHoursLater >= 12 ? "pm" : "am";
+            // getElevenHoursLater = getElevenHoursLater % 12;
+            // getElevenHoursLater = getElevenHoursLater
+            //   ? getElevenHoursLater
+            //   : 12;
 
-            const setFourteenHoursLater = new Date();
-            setFourteenHoursLater.setHours(
-              setFourteenHoursLater.getHours() + 14
-            );
-            let getFourteenHoursLater = setFourteenHoursLater.getHours();
-            const ampmFourteen = getFourteenHoursLater >= 12 ? "pm" : "am";
-            getFourteenHoursLater = getFourteenHoursLater % 12;
-            getFourteenHoursLater = getFourteenHoursLater
-              ? getFourteenHoursLater
-              : 12;
+            // const setTwelveHoursLater = new Date();
+            // setTwelveHoursLater.setHours(setTwelveHoursLater.getHours() + 12);
+            // let getTwelveHoursLater = setTwelveHoursLater.getHours();
+            // const ampmTwelve = getTwelveHoursLater >= 12 ? "pm" : "am";
+            // getTwelveHoursLater = getTwelveHoursLater % 12;
+            // getTwelveHoursLater = getTwelveHoursLater
+            //   ? getTwelveHoursLater
+            //   : 12;
 
-            const setFifteenHoursLater = new Date();
-            setFifteenHoursLater.setHours(setFifteenHoursLater.getHours() + 15);
-            let getFifteenHoursLater = setFifteenHoursLater.getHours();
-            const ampmFifteen = getFifteenHoursLater >= 12 ? "pm" : "am";
-            getFifteenHoursLater = getFifteenHoursLater % 12;
-            getFifteenHoursLater = getFifteenHoursLater
-              ? getFifteenHoursLater
-              : 12;
+            // const setThirteenHoursLater = new Date();
+            // setThirteenHoursLater.setHours(
+            //   setThirteenHoursLater.getHours() + 13
+            // );
+            // let getThirteenHoursLater = setThirteenHoursLater.getHours();
+            // const ampmThirteen = getThirteenHoursLater >= 12 ? "pm" : "am";
+            // getThirteenHoursLater = getThirteenHoursLater % 12;
+            // getThirteenHoursLater = getThirteenHoursLater
+            //   ? getThirteenHoursLater
+            //   : 12;
 
-            const setSixteenHoursLater = new Date();
-            setSixteenHoursLater.setHours(setSixteenHoursLater.getHours() + 16);
-            let getSixteenHoursLater = setSixteenHoursLater.getHours();
-            const ampmSixteen = getSixteenHoursLater >= 12 ? "pm" : "am";
-            getSixteenHoursLater = getSixteenHoursLater % 12;
-            getSixteenHoursLater = getSixteenHoursLater
-              ? getSixteenHoursLater
-              : 12;
+            // const setFourteenHoursLater = new Date();
+            // setFourteenHoursLater.setHours(
+            //   setFourteenHoursLater.getHours() + 14
+            // );
+            // let getFourteenHoursLater = setFourteenHoursLater.getHours();
+            // const ampmFourteen = getFourteenHoursLater >= 12 ? "pm" : "am";
+            // getFourteenHoursLater = getFourteenHoursLater % 12;
+            // getFourteenHoursLater = getFourteenHoursLater
+            //   ? getFourteenHoursLater
+            //   : 12;
 
-            const setSeventeenHoursLater = new Date();
-            setSeventeenHoursLater.setHours(
-              setSeventeenHoursLater.getHours() + 17
-            );
-            let getSeventeenHoursLater = setSeventeenHoursLater.getHours();
-            const ampmSeventeen = getSeventeenHoursLater >= 12 ? "pm" : "am";
-            getSeventeenHoursLater = getSeventeenHoursLater % 12;
-            getSeventeenHoursLater = getSeventeenHoursLater
-              ? getSeventeenHoursLater
-              : 12;
+            // const setFifteenHoursLater = new Date();
+            // setFifteenHoursLater.setHours(setFifteenHoursLater.getHours() + 15);
+            // let getFifteenHoursLater = setFifteenHoursLater.getHours();
+            // const ampmFifteen = getFifteenHoursLater >= 12 ? "pm" : "am";
+            // getFifteenHoursLater = getFifteenHoursLater % 12;
+            // getFifteenHoursLater = getFifteenHoursLater
+            //   ? getFifteenHoursLater
+            //   : 12;
 
-            const setEighteenHoursLater = new Date();
-            setEighteenHoursLater.setHours(
-              setEighteenHoursLater.getHours() + 18
-            );
-            let getEighteenHoursLater = setEighteenHoursLater.getHours();
-            const ampmEighteen = getEighteenHoursLater >= 12 ? "pm" : "am";
-            getEighteenHoursLater = getEighteenHoursLater % 12;
-            getEighteenHoursLater = getEighteenHoursLater
-              ? getEighteenHoursLater
-              : 12;
+            // const setSixteenHoursLater = new Date();
+            // setSixteenHoursLater.setHours(setSixteenHoursLater.getHours() + 16);
+            // let getSixteenHoursLater = setSixteenHoursLater.getHours();
+            // const ampmSixteen = getSixteenHoursLater >= 12 ? "pm" : "am";
+            // getSixteenHoursLater = getSixteenHoursLater % 12;
+            // getSixteenHoursLater = getSixteenHoursLater
+            //   ? getSixteenHoursLater
+            //   : 12;
 
-            const setNineteenHoursLater = new Date();
-            setNineteenHoursLater.setHours(
-              setNineteenHoursLater.getHours() + 19
-            );
-            let getNineteenHoursLater = setNineteenHoursLater.getHours();
-            const ampmNineteen = getNineteenHoursLater >= 12 ? "pm" : "am";
-            getNineteenHoursLater = getNineteenHoursLater % 12;
-            getNineteenHoursLater = getNineteenHoursLater
-              ? getNineteenHoursLater
-              : 12;
+            // const setSeventeenHoursLater = new Date();
+            // setSeventeenHoursLater.setHours(
+            //   setSeventeenHoursLater.getHours() + 17
+            // );
+            // let getSeventeenHoursLater = setSeventeenHoursLater.getHours();
+            // const ampmSeventeen = getSeventeenHoursLater >= 12 ? "pm" : "am";
+            // getSeventeenHoursLater = getSeventeenHoursLater % 12;
+            // getSeventeenHoursLater = getSeventeenHoursLater
+            //   ? getSeventeenHoursLater
+            //   : 12;
 
-            const setTwentyHoursLater = new Date();
-            setTwentyHoursLater.setHours(setTwentyHoursLater.getHours() + 20);
-            let getTwentyHoursLater = setTwentyHoursLater.getHours();
-            const ampmTwenty = getTwentyHoursLater >= 12 ? "pm" : "am";
-            getTwentyHoursLater = getTwentyHoursLater % 12;
-            getTwentyHoursLater = getTwentyHoursLater
-              ? getTwentyHoursLater
-              : 12;
+            // const setEighteenHoursLater = new Date();
+            // setEighteenHoursLater.setHours(
+            //   setEighteenHoursLater.getHours() + 18
+            // );
+            // let getEighteenHoursLater = setEighteenHoursLater.getHours();
+            // const ampmEighteen = getEighteenHoursLater >= 12 ? "pm" : "am";
+            // getEighteenHoursLater = getEighteenHoursLater % 12;
+            // getEighteenHoursLater = getEighteenHoursLater
+            //   ? getEighteenHoursLater
+            //   : 12;
 
-            const setTwentyOneHoursLater = new Date();
-            setTwentyOneHoursLater.setHours(
-              setTwentyOneHoursLater.getHours() + 21
-            );
-            let getTwentyOneHoursLater = setTwentyOneHoursLater.getHours();
-            const ampmTwentyOne = getTwentyOneHoursLater >= 12 ? "pm" : "am";
-            getTwentyOneHoursLater = getTwentyOneHoursLater % 12;
-            getTwentyOneHoursLater = getTwentyOneHoursLater
-              ? getTwentyOneHoursLater
-              : 12;
+            // const setNineteenHoursLater = new Date();
+            // setNineteenHoursLater.setHours(
+            //   setNineteenHoursLater.getHours() + 19
+            // );
+            // let getNineteenHoursLater = setNineteenHoursLater.getHours();
+            // const ampmNineteen = getNineteenHoursLater >= 12 ? "pm" : "am";
+            // getNineteenHoursLater = getNineteenHoursLater % 12;
+            // getNineteenHoursLater = getNineteenHoursLater
+            //   ? getNineteenHoursLater
+            //   : 12;
 
-            const setTwentyTwoHoursLater = new Date();
-            setTwentyTwoHoursLater.setHours(
-              setTwentyTwoHoursLater.getHours() + 22
-            );
-            let getTwentyTwoHoursLater = setTwentyTwoHoursLater.getHours();
-            const ampmTwentyTwo = getTwentyTwoHoursLater >= 12 ? "pm" : "am";
-            getTwentyTwoHoursLater = getTwentyTwoHoursLater % 12;
-            getTwentyTwoHoursLater = getTwentyTwoHoursLater
-              ? getTwentyTwoHoursLater
-              : 12;
+            // const setTwentyHoursLater = new Date();
+            // setTwentyHoursLater.setHours(setTwentyHoursLater.getHours() + 20);
+            // let getTwentyHoursLater = setTwentyHoursLater.getHours();
+            // const ampmTwenty = getTwentyHoursLater >= 12 ? "pm" : "am";
+            // getTwentyHoursLater = getTwentyHoursLater % 12;
+            // getTwentyHoursLater = getTwentyHoursLater
+            //   ? getTwentyHoursLater
+            //   : 12;
 
-            const setTwentyThreeHoursLater = new Date();
-            setTwentyThreeHoursLater.setHours(
-              setTwentyThreeHoursLater.getHours() + 23
-            );
-            let getTwentyThreeHoursLater = setTwentyThreeHoursLater.getHours();
-            const ampmTwentyThree =
-              getTwentyThreeHoursLater >= 12 ? "pm" : "am";
-            getTwentyThreeHoursLater = getTwentyThreeHoursLater % 12;
-            getTwentyThreeHoursLater = getTwentyThreeHoursLater
-              ? getTwentyThreeHoursLater
-              : 12;
+            // const setTwentyOneHoursLater = new Date();
+            // setTwentyOneHoursLater.setHours(
+            //   setTwentyOneHoursLater.getHours() + 21
+            // );
+            // let getTwentyOneHoursLater = setTwentyOneHoursLater.getHours();
+            // const ampmTwentyOne = getTwentyOneHoursLater >= 12 ? "pm" : "am";
+            // getTwentyOneHoursLater = getTwentyOneHoursLater % 12;
+            // getTwentyOneHoursLater = getTwentyOneHoursLater
+            //   ? getTwentyOneHoursLater
+            //   : 12;
 
-            const setTwentyFourHoursLater = new Date();
-            setTwentyFourHoursLater.setHours(
-              setTwentyFourHoursLater.getHours() + 24
-            );
-            let getTwentyFourHoursLater = setTwentyFourHoursLater.getHours();
-            const ampmTwentyFour = getTwentyFourHoursLater >= 12 ? "pm" : "am";
-            getTwentyFourHoursLater = getTwentyFourHoursLater % 12;
-            getTwentyFourHoursLater = getTwentyFourHoursLater
-              ? getTwentyFourHoursLater
-              : 12;
+            // const setTwentyTwoHoursLater = new Date();
+            // setTwentyTwoHoursLater.setHours(
+            //   setTwentyTwoHoursLater.getHours() + 22
+            // );
+            // let getTwentyTwoHoursLater = setTwentyTwoHoursLater.getHours();
+            // const ampmTwentyTwo = getTwentyTwoHoursLater >= 12 ? "pm" : "am";
+            // getTwentyTwoHoursLater = getTwentyTwoHoursLater % 12;
+            // getTwentyTwoHoursLater = getTwentyTwoHoursLater
+            //   ? getTwentyTwoHoursLater
+            //   : 12;
+
+            // const setTwentyThreeHoursLater = new Date();
+            // setTwentyThreeHoursLater.setHours(
+            //   setTwentyThreeHoursLater.getHours() + 23
+            // );
+            // let getTwentyThreeHoursLater = setTwentyThreeHoursLater.getHours();
+            // const ampmTwentyThree =
+            //   getTwentyThreeHoursLater >= 12 ? "pm" : "am";
+            // getTwentyThreeHoursLater = getTwentyThreeHoursLater % 12;
+            // getTwentyThreeHoursLater = getTwentyThreeHoursLater
+            //   ? getTwentyThreeHoursLater
+            //   : 12;
+
+            // const setTwentyFourHoursLater = new Date();
+            // setTwentyFourHoursLater.setHours(
+            //   setTwentyFourHoursLater.getHours() + 24
+            // );
+            // let getTwentyFourHoursLater = setTwentyFourHoursLater.getHours();
+            // const ampmTwentyFour = getTwentyFourHoursLater >= 12 ? "pm" : "am";
+            // getTwentyFourHoursLater = getTwentyFourHoursLater % 12;
+            // getTwentyFourHoursLater = getTwentyFourHoursLater
+            //   ? getTwentyFourHoursLater
+            //   : 12;
+
+            let hourlyTempList = [];
+            let hourlyDescriptionList = [];
+            let hourlyIconList = [];
+            let hourlyImageUrlList = [];
+
+            for (let i = 0; i < 24; i++) {
+              hourlyTempList.push(weatherData.hourly[i].temp.toFixed(1));
+              hourlyDescriptionList.push(
+                weatherData.hourly[i].weather[0].description
+              );
+              hourlyIconList.push(weatherData.hourly[i].weather[0].icon);
+              hourlyImageUrlList.push(
+                `http://openweathermap.org/img/wn/${weatherData.hourly[i].weather[0].icon}@2x.png`
+              );
+            }
+
+            let ampmList = [];
+            let ampmHourList = [];
+
+            for (let i = 0; i < 24; i++) {
+              let hours = datesList[0].getHours() + i;
+              ampmList.push(hours >= 12 ? "pm" : "am");
+              hours = hours % 12;
+              hours = hours ? hours : 12;
+              ampmHourList.push(hours);
+            }
 
             // display am/pm
-            const currentHour = `${hours}:00${ampm}`;
-            const oneHourLater = `${getOneHourLater}:00${ampmOne}`;
-            const twoHoursLater = `${getTwoHoursLater}:00${ampmTwo}`;
-            const threeHoursLater = `${getThreeHoursLater}:00${ampmThree}`;
-            const fourHoursLater = `${getFourHoursLater}:00${ampmFour}`;
-            const fiveHoursLater = `${getFiveHoursLater}:00${ampmFive}`;
-            const sixHoursLater = `${getSixHoursLater}:00${ampmSix}`;
-            const sevenHoursLater = `${getSevenHoursLater}:00${ampmSeven}`;
-            const eightHoursLater = `${getEightHoursLater}:00${ampmEight}`;
-            const nineHoursLater = `${getNineHoursLater}:00${ampmNine}`;
-            const tenHoursLater = `${getTenHoursLater}:00${ampmTen}`;
-            const elevenHoursLater = `${getElevenHoursLater}:00${ampmEleven}`;
-            const twelveHoursLater = `${getTwelveHoursLater}:00${ampmTwelve}`;
-            const thirteenHoursLater = `${getThirteenHoursLater}:00${ampmThirteen}`;
-            const fourteenHoursLater = `${getFourteenHoursLater}:00${ampmFourteen}`;
-            const fifteenHoursLater = `${getFifteenHoursLater}:00${ampmFifteen}`;
-            const sixteenHoursLater = `${getSixteenHoursLater}:00${ampmSixteen}`;
-            const seventeenHoursLater = `${getSeventeenHoursLater}:00${ampmSeventeen}`;
-            const eighteenHoursLater = `${getEighteenHoursLater}:00${ampmEighteen}`;
-            const nineteenHoursLater = `${getNineteenHoursLater}:00${ampmNineteen}`;
-            const twentyHoursLater = `${getTwentyHoursLater}:00${ampmTwenty}`;
-            const twentyOneHoursLater = `${getTwentyOneHoursLater}:00${ampmTwentyOne}`;
-            const twentyTwoHoursLater = `${getTwentyTwoHoursLater}:00${ampmTwentyTwo}`;
-            const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00${ampmTwentyThree}`;
-            const twentyFourHoursLater = `${getTwentyFourHoursLater}:00${ampmTwentyFour}`;
+            const currentHour = `${ampmHourList[0]}:00${ampmList[0]}`;
+            const oneHourLater = `${ampmHourList[1]}:00${ampmList[1]}`;
+            const twoHoursLater = `${ampmHourList[2]}:00${ampmList[2]}`;
+            const threeHoursLater = `${ampmHourList[3]}:00${ampmList[3]}`;
+            const fourHoursLater = `${ampmHourList[4]}:00${ampmList[4]}`;
+            const fiveHoursLater = `${ampmHourList[5]}:00${ampmList[5]}`;
+            const sixHoursLater = `${ampmHourList[6]}:00${ampmList[6]}`;
+            const sevenHoursLater = `${ampmHourList[7]}:00${ampmList[7]}`;
+            const eightHoursLater = `${ampmHourList[8]}:00${ampmList[8]}`;
+            const nineHoursLater = `${ampmHourList[9]}:00${ampmList[9]}`;
+            const tenHoursLater = `${ampmHourList[10]}:00${ampmList[10]}`;
+            const elevenHoursLater = `${ampmHourList[11]}:00${ampmList[11]}`;
+            const twelveHoursLater = `${ampmHourList[12]}:00${ampmList[12]}`;
+            const thirteenHoursLater = `${ampmHourList[13]}:00${ampmList[13]}`;
+            const fourteenHoursLater = `${ampmHourList[14]}:00${ampmList[14]}`;
+            const fifteenHoursLater = `${ampmHourList[15]}:00${ampmList[15]}`;
+            const sixteenHoursLater = `${ampmHourList[16]}:00${ampmList[16]}`;
+            const seventeenHoursLater = `${ampmHourList[17]}:00${ampmList[17]}`;
+            const eighteenHoursLater = `${ampmHourList[18]}:00${ampmList[18]}`;
+            const nineteenHoursLater = `${ampmHourList[19]}:00${ampmList[19]}`;
+            const twentyHoursLater = `${ampmHourList[20]}:00${ampmList[20]}`;
+            const twentyOneHoursLater = `${ampmHourList[21]}:00${ampmList[21]}`;
+            const twentyTwoHoursLater = `${ampmHourList[22]}:00${ampmList[22]}`;
+            const twentyThreeHoursLater = `${ampmHourList[23]}:00${ampmList[23]}`;
+            const twentyFourHoursLater = `${ampmHourList[24]}:00${ampmList[24]}`;
 
             // display 24hours
             // const currentHour = `${hours}:00`;
@@ -634,6 +713,11 @@ app.post("/", (req, res) => {
             // const twentyThreeHoursLater = `${getTwentyThreeHoursLater}:00`;
             // const twentyFourHoursLater = `${getTwentyFourHoursLater}:00`;
 
+            // let hourlyTempList = [];
+            // let hourlyDescriptionList = [];
+            // let hourlyIconList = [];
+            // let hourlyImageUrlList = [];
+
             res.write(
               `
               <h1 class="title-red" style="margin: 4rem 0 0 0;">
@@ -643,11 +727,11 @@ app.post("/", (req, res) => {
               <div>
                 <div class="hourly-element-center">
                   <h3 class="hour">${currentHour} </h3>
-                  <img style="width:40px;" src=${currentImageURL}>
+                  <img style="width:40px;" src=${hourlyImageUrlList[0]}>
                   <h3 class="hourly-temp">
-                  ${currentTemp} &#8451;
+                  ${hourlyTempList[0]} &#8451;
                   </h3>
-                  <h3 class="hourly-description">${currentDescription}</h3>
+                  <h3 class="hourly-description">${hourlyDescriptionList[0]}</h3>
                 </div>
                 <div class="hourly-element-center"">
                   <h3 class="hour">${oneHourLater} </h3>
