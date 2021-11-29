@@ -109,6 +109,8 @@ app.post("/", (req, res) => {
           response.on("data", (data) => (resultData += data));
           response.on("end", () => {
             const weatherData = JSON.parse(resultData);
+
+            // create data lists
             let tempMinList = [];
             let tempMaxList = [];
             let tempDescriptionList = [];
@@ -127,102 +129,32 @@ app.post("/", (req, res) => {
               );
             }
 
-            const todayTempMin = weatherData.daily[0].temp.min.toFixed(1);
-            const todayTempMax = weatherData.daily[0].temp.max.toFixed(1);
-            const todayWeatherDescription =
-              weatherData.daily[0].weather[0].description;
-            const todayWeatherIcon = weatherData.daily[0].weather[0].icon;
-            const todayWeatherImageURL = `http://openweathermap.org/img/wn/${todayWeatherIcon}@2x.png`;
-            const oneDayLaterTempMin = weatherData.daily[1].temp.min.toFixed(1);
-            const oneDayLaterTempMax = weatherData.daily[1].temp.max.toFixed(1);
-            const oneDayLaterWeatherDescription =
-              weatherData.daily[1].weather[0].description;
-            const oneDayLaterWeatherIcon = weatherData.daily[1].weather[0].icon;
-            const oneDayLaterWeatherImageURL = `http://openweathermap.org/img/wn/${oneDayLaterWeatherIcon}@2x.png`;
-            const twoDaysLaterTempMin =
-              weatherData.daily[2].temp.min.toFixed(1);
-            const twoDaysLaterTempMax =
-              weatherData.daily[2].temp.max.toFixed(1);
-            const twoDaysLaterWeatherDescription =
-              weatherData.daily[2].weather[0].description;
-            const twoDaysLaterWeatherIcon =
-              weatherData.daily[2].weather[0].icon;
-            const twoDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${twoDaysLaterWeatherIcon}@2x.png`;
-            const threeDaysLaterTempMin =
-              weatherData.daily[3].temp.min.toFixed(1);
-            const threeDaysLaterTempMax =
-              weatherData.daily[3].temp.max.toFixed(1);
-            const threeDaysLaterWeatherDescription =
-              weatherData.daily[3].weather[0].description;
-            const threeDaysLaterWeatherIcon =
-              weatherData.daily[3].weather[0].icon;
-            const threeDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${threeDaysLaterWeatherIcon}@2x.png`;
-            const fourDaysLaterTempMin =
-              weatherData.daily[4].temp.min.toFixed(1);
-            const fourDaysLaterTempMax =
-              weatherData.daily[4].temp.max.toFixed(1);
-            const fourDaysLaterWeatherDescription =
-              weatherData.daily[4].weather[0].description;
-            const fourDaysLaterWeatherIcon =
-              weatherData.daily[4].weather[0].icon;
-            const fourDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fourDaysLaterWeatherIcon}@2x.png`;
-            const fiveDaysLaterTempMin =
-              weatherData.daily[5].temp.min.toFixed(1);
-            const fiveDaysLaterTempMax =
-              weatherData.daily[5].temp.max.toFixed(1);
-            const fiveDaysLaterWeatherDescription =
-              weatherData.daily[5].weather[0].description;
-            const fiveDaysLaterWeatherIcon =
-              weatherData.daily[5].weather[0].icon;
-            const fiveDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fiveDaysLaterWeatherIcon}@2x.png`;
-            const sixDaysLaterTempMin =
-              weatherData.daily[6].temp.min.toFixed(1);
-            const sixDaysLaterTempMax =
-              weatherData.daily[6].temp.max.toFixed(1);
-            const sixDaysLaterWeatherIcon =
-              weatherData.daily[6].weather[0].icon;
-            const sixDaysLaterWeatherDescription =
-              weatherData.daily[6].weather[0].description;
-            const sixDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sixDaysLaterWeatherIcon}@2x.png`;
-            const sevenDaysLaterTempMin =
-              weatherData.daily[7].temp.min.toFixed(1);
-            const sevenDaysLaterTempMax =
-              weatherData.daily[7].temp.max.toFixed(1);
-            const sevenDaysLaterWeatherDescription =
-              weatherData.daily[7].weather[0].description;
-            const sevenDaysLaterWeatherIcon =
-              weatherData.daily[7].weather[0].icon;
-            const sevenDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sevenDaysLaterWeatherIcon}@2x.png`;
-
             // get real days
-            const currentDate = new Date(
+            const currentDate = new Date();
+
+            const oneDateLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000
             );
-            const oneDateLater = new Date(
+            const twoDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 2
             );
-            const twoDatesLater = new Date(
+            const threeDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 3
             );
-            const threeDatesLater = new Date(
+            const fourDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 4
             );
-            const fourDatesLater = new Date(
+            const fiveDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 5
             );
-            const fiveDatesLater = new Date(
+            const sixDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 6
             );
-            const sixDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 7
-            );
             const sevenDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 8
+              new Date().getTime() + 24 * 60 * 60 * 1000 * 7
             );
 
             // get week of days
-            const d = new Date();
-
             const weekday = new Array(13);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
@@ -239,33 +171,41 @@ app.post("/", (req, res) => {
             weekday[12] = weekday[5];
             weekday[13] = weekday[6];
 
-            const dayOne = weekday[d.getDay()];
-            const dayTwo = weekday[d.getDay() + 1];
-            const dayThree = weekday[d.getDay() + 2];
-            const dayFour = weekday[d.getDay() + 3];
-            const dayFive = weekday[d.getDay() + 4];
-            const daySix = weekday[d.getDay() + 5];
-            const daySeven = weekday[d.getDay() + 6];
+            const dayOne = weekday[currentDate.getDay()];
+            const dayTwo = weekday[currentDate.getDay() + 1];
+            const dayThree = weekday[currentDate.getDay() + 2];
+            const dayFour = weekday[currentDate.getDay() + 3];
+            const dayFive = weekday[currentDate.getDay() + 4];
+            const daySix = weekday[currentDate.getDay() + 5];
+            const daySeven = weekday[currentDate.getDay() + 6];
 
-            const month = currentDate.getMonth() + 1;
+            const monthByToday = currentDate.getMonth() + 1;
+            const monthByOneDayLater = oneDateLater.getMonth() + 1;
+            const monthByTwoDaysLater = twoDatesLater.getMonth() + 1;
+            const monthByThreeDaysLater = threeDatesLater.getMonth() + 1;
+            const monthByFourDaysLater = fourDatesLater.getMonth() + 1;
+            const monthByFiveDaysLater = fiveDatesLater.getMonth() + 1;
+            const monthBySixDaysLater = sixDatesLater.getMonth() + 1;
+            const monthBySevenDaysLater = sevenDatesLater.getMonth() + 1;
 
-            const day = currentDate.getDate() - 1;
-            const oneDayLater = oneDateLater.getDate() - 1;
-            const twoDaysLater = twoDatesLater.getDate() - 1;
-            const threeDaysLater = threeDatesLater.getDate() - 1;
-            const fourDaysLater = fourDatesLater.getDate() - 1;
-            const fiveDaysLater = fiveDatesLater.getDate() - 1;
-            const sixDaysLater = sixDatesLater.getDate() - 1;
-            const sevenDaysLater = sevenDatesLater.getDate() - 1;
+            const day = currentDate.getDate();
+            const oneDayLater = oneDateLater.getDate();
+            const twoDaysLater = twoDatesLater.getDate();
+            console.log(twoDaysLater);
+            const threeDaysLater = threeDatesLater.getDate();
+            const fourDaysLater = fourDatesLater.getDate();
+            const fiveDaysLater = fiveDatesLater.getDate();
+            const sixDaysLater = sixDatesLater.getDate();
+            const sevenDaysLater = sevenDatesLater.getDate();
 
-            const date = `${month}/${day}${dayOne}`;
-            const oneDayLaterDate = `${month}/${oneDayLater}${dayTwo}`;
-            const twoDaysLaterDate = `${month}/${twoDaysLater}${dayThree}`;
-            const threeDaysLaterDate = `${month}/${threeDaysLater}${dayFour}`;
-            const fourDaysLaterDate = `${month}/${fourDaysLater}${dayFive}`;
-            const fiveDaysLaterDate = `${month}/${fiveDaysLater}${daySix}`;
-            const sixDaysLaterDate = `${month}/${sixDaysLater}${daySeven}`;
-            const sevenDaysLaterDate = `${month}/${sevenDaysLater}${dayOne}`;
+            const date = `${monthByToday}/${day}${dayOne}`;
+            const oneDayLaterDate = `${monthByOneDayLater}/${oneDayLater}${dayTwo}`;
+            const twoDaysLaterDate = `${monthByTwoDaysLater}/${twoDaysLater}${dayThree}`;
+            const threeDaysLaterDate = `${monthByThreeDaysLater}/${threeDaysLater}${dayFour}`;
+            const fourDaysLaterDate = `${monthByFourDaysLater}/${fourDaysLater}${dayFive}`;
+            const fiveDaysLaterDate = `${monthByFiveDaysLater}/${fiveDaysLater}${daySix}`;
+            const sixDaysLaterDate = `${monthBySixDaysLater}/${sixDaysLater}${daySeven}`;
+            const sevenDaysLaterDate = `${monthBySevenDaysLater}/${sevenDaysLater}${dayOne}`;
 
             res.write(
               `
