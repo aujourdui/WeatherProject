@@ -12,11 +12,11 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.post("/", function (req, res) {
+app.post("/", (req, res) => {
   const originalQuery = req.body.cityName;
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,8 +26,8 @@ app.post("/", function (req, res) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
   // current weather
-  https.get(url, function (response) {
-    response.on("data", function (data) {
+  https.get(url, (response) => {
+    response.on("data", (data) => {
       const weatherData = JSON.parse(data);
       const cityName = weatherData.name;
 
@@ -104,107 +104,57 @@ app.post("/", function (req, res) {
 
         const urlGeo = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit}&appid=6ead27bdb26041ed3ea800802ff72381`;
 
-        https.get(urlGeo, function (response) {
+        https.get(urlGeo, (response) => {
           let resultData = "";
           response.on("data", (data) => (resultData += data));
           response.on("end", () => {
             const weatherData = JSON.parse(resultData);
-            const todayTempMin = weatherData.daily[0].temp.min.toFixed(1);
-            const todayTempMax = weatherData.daily[0].temp.max.toFixed(1);
-            const todayWeatherDescription =
-              weatherData.daily[0].weather[0].description;
-            const todayWeatherIcon = weatherData.daily[0].weather[0].icon;
-            const todayWeatherImageURL = `http://openweathermap.org/img/wn/${todayWeatherIcon}@2x.png`;
-            const oneDayLaterTempMin = weatherData.daily[1].temp.min.toFixed(1);
-            const oneDayLaterTempMax = weatherData.daily[1].temp.max.toFixed(1);
-            const oneDayLaterWeatherDescription =
-              weatherData.daily[1].weather[0].description;
-            const oneDayLaterWeatherIcon = weatherData.daily[1].weather[0].icon;
-            const oneDayLaterWeatherImageURL = `http://openweathermap.org/img/wn/${oneDayLaterWeatherIcon}@2x.png`;
-            const twoDaysLaterTempMin =
-              weatherData.daily[2].temp.min.toFixed(1);
-            const twoDaysLaterTempMax =
-              weatherData.daily[2].temp.max.toFixed(1);
-            const twoDaysLaterWeatherDescription =
-              weatherData.daily[2].weather[0].description;
-            const twoDaysLaterWeatherIcon =
-              weatherData.daily[2].weather[0].icon;
-            const twoDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${twoDaysLaterWeatherIcon}@2x.png`;
-            const threeDaysLaterTempMin =
-              weatherData.daily[3].temp.min.toFixed(1);
-            const threeDaysLaterTempMax =
-              weatherData.daily[3].temp.max.toFixed(1);
-            const threeDaysLaterWeatherDescription =
-              weatherData.daily[3].weather[0].description;
-            const threeDaysLaterWeatherIcon =
-              weatherData.daily[3].weather[0].icon;
-            const threeDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${threeDaysLaterWeatherIcon}@2x.png`;
-            const fourDaysLaterTempMin =
-              weatherData.daily[4].temp.min.toFixed(1);
-            const fourDaysLaterTempMax =
-              weatherData.daily[4].temp.max.toFixed(1);
-            const fourDaysLaterWeatherDescription =
-              weatherData.daily[4].weather[0].description;
-            const fourDaysLaterWeatherIcon =
-              weatherData.daily[4].weather[0].icon;
-            const fourDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fourDaysLaterWeatherIcon}@2x.png`;
-            const fiveDaysLaterTempMin =
-              weatherData.daily[5].temp.min.toFixed(1);
-            const fiveDaysLaterTempMax =
-              weatherData.daily[5].temp.max.toFixed(1);
-            const fiveDaysLaterWeatherDescription =
-              weatherData.daily[5].weather[0].description;
-            const fiveDaysLaterWeatherIcon =
-              weatherData.daily[5].weather[0].icon;
-            const fiveDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${fiveDaysLaterWeatherIcon}@2x.png`;
-            const sixDaysLaterTempMin =
-              weatherData.daily[6].temp.min.toFixed(1);
-            const sixDaysLaterTempMax =
-              weatherData.daily[6].temp.max.toFixed(1);
-            const sixDaysLaterWeatherIcon =
-              weatherData.daily[6].weather[0].icon;
-            const sixDaysLaterWeatherDescription =
-              weatherData.daily[6].weather[0].description;
-            const sixDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sixDaysLaterWeatherIcon}@2x.png`;
-            const sevenDaysLaterTempMin =
-              weatherData.daily[7].temp.min.toFixed(1);
-            const sevenDaysLaterTempMax =
-              weatherData.daily[7].temp.max.toFixed(1);
-            const sevenDaysLaterWeatherDescription =
-              weatherData.daily[7].weather[0].description;
-            const sevenDaysLaterWeatherIcon =
-              weatherData.daily[7].weather[0].icon;
-            const sevenDaysLaterWeatherImageURL = `http://openweathermap.org/img/wn/${sevenDaysLaterWeatherIcon}@2x.png`;
+
+            // create data lists
+            let tempMinList = [];
+            let tempMaxList = [];
+            let tempDescriptionList = [];
+            let iconList = [];
+            let imageUrlList = [];
+
+            for (let i = 0; i < 8; i++) {
+              tempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
+              tempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
+              tempDescriptionList.push(
+                weatherData.daily[i].weather[0].description
+              );
+              iconList.push(weatherData.daily[i].weather[0].icon);
+              imageUrlList.push(
+                `http://openweathermap.org/img/wn/${weatherData.daily[i].weather[0].icon}@2x.png`
+              );
+            }
 
             // get real days
-            const currentDate = new Date(
+            const currentDate = new Date();
+
+            const oneDateLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000
             );
-            const oneDateLater = new Date(
+            const twoDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 2
             );
-            const twoDatesLater = new Date(
+            const threeDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 3
             );
-            const threeDatesLater = new Date(
+            const fourDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 4
             );
-            const fourDatesLater = new Date(
+            const fiveDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 5
             );
-            const fiveDatesLater = new Date(
+            const sixDatesLater = new Date(
               new Date().getTime() + 24 * 60 * 60 * 1000 * 6
             );
-            const sixDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 7
-            );
             const sevenDatesLater = new Date(
-              new Date().getTime() + 24 * 60 * 60 * 1000 * 8
+              new Date().getTime() + 24 * 60 * 60 * 1000 * 7
             );
 
             // get week of days
-            const d = new Date();
-
             const weekday = new Array(13);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
@@ -221,33 +171,41 @@ app.post("/", function (req, res) {
             weekday[12] = weekday[5];
             weekday[13] = weekday[6];
 
-            const dayOne = weekday[d.getDay()];
-            const dayTwo = weekday[d.getDay() + 1];
-            const dayThree = weekday[d.getDay() + 2];
-            const dayFour = weekday[d.getDay() + 3];
-            const dayFive = weekday[d.getDay() + 4];
-            const daySix = weekday[d.getDay() + 5];
-            const daySeven = weekday[d.getDay() + 6];
+            const dayOne = weekday[currentDate.getDay()];
+            const dayTwo = weekday[currentDate.getDay() + 1];
+            const dayThree = weekday[currentDate.getDay() + 2];
+            const dayFour = weekday[currentDate.getDay() + 3];
+            const dayFive = weekday[currentDate.getDay() + 4];
+            const daySix = weekday[currentDate.getDay() + 5];
+            const daySeven = weekday[currentDate.getDay() + 6];
 
-            const month = currentDate.getMonth() + 1;
+            const monthByToday = currentDate.getMonth() + 1;
+            const monthByOneDayLater = oneDateLater.getMonth() + 1;
+            const monthByTwoDaysLater = twoDatesLater.getMonth() + 1;
+            const monthByThreeDaysLater = threeDatesLater.getMonth() + 1;
+            const monthByFourDaysLater = fourDatesLater.getMonth() + 1;
+            const monthByFiveDaysLater = fiveDatesLater.getMonth() + 1;
+            const monthBySixDaysLater = sixDatesLater.getMonth() + 1;
+            const monthBySevenDaysLater = sevenDatesLater.getMonth() + 1;
 
-            const day = currentDate.getDate() - 1;
-            const oneDayLater = oneDateLater.getDate() - 1;
-            const twoDaysLater = twoDatesLater.getDate() - 1;
-            const threeDaysLater = threeDatesLater.getDate() - 1;
-            const fourDaysLater = fourDatesLater.getDate() - 1;
-            const fiveDaysLater = fiveDatesLater.getDate() - 1;
-            const sixDaysLater = sixDatesLater.getDate() - 1;
-            const sevenDaysLater = sevenDatesLater.getDate() - 1;
+            const day = currentDate.getDate();
+            const oneDayLater = oneDateLater.getDate();
+            const twoDaysLater = twoDatesLater.getDate();
+            console.log(twoDaysLater);
+            const threeDaysLater = threeDatesLater.getDate();
+            const fourDaysLater = fourDatesLater.getDate();
+            const fiveDaysLater = fiveDatesLater.getDate();
+            const sixDaysLater = sixDatesLater.getDate();
+            const sevenDaysLater = sevenDatesLater.getDate();
 
-            const date = `${month}/${day}${dayOne}`;
-            const oneDayLaterDate = `${month}/${oneDayLater}${dayTwo}`;
-            const twoDaysLaterDate = `${month}/${twoDaysLater}${dayThree}`;
-            const threeDaysLaterDate = `${month}/${threeDaysLater}${dayFour}`;
-            const fourDaysLaterDate = `${month}/${fourDaysLater}${dayFive}`;
-            const fiveDaysLaterDate = `${month}/${fiveDaysLater}${daySix}`;
-            const sixDaysLaterDate = `${month}/${sixDaysLater}${daySeven}`;
-            const sevenDaysLaterDate = `${month}/${sevenDaysLater}${dayOne}`;
+            const date = `${monthByToday}/${day}${dayOne}`;
+            const oneDayLaterDate = `${monthByOneDayLater}/${oneDayLater}${dayTwo}`;
+            const twoDaysLaterDate = `${monthByTwoDaysLater}/${twoDaysLater}${dayThree}`;
+            const threeDaysLaterDate = `${monthByThreeDaysLater}/${threeDaysLater}${dayFour}`;
+            const fourDaysLaterDate = `${monthByFourDaysLater}/${fourDaysLater}${dayFive}`;
+            const fiveDaysLaterDate = `${monthByFiveDaysLater}/${fiveDaysLater}${daySix}`;
+            const sixDaysLaterDate = `${monthBySixDaysLater}/${sixDaysLater}${daySeven}`;
+            const sevenDaysLaterDate = `${monthBySevenDaysLater}/${sevenDaysLater}${dayOne}`;
 
             res.write(
               `
@@ -258,67 +216,67 @@ app.post("/", function (req, res) {
                   <div>
                     <div class="daily-element-center">
                       <h2 class="date">${date} </h2>
-                      <img style="width:60px;" src=${todayWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[0]}>
                       <h2 class="daily-temp">
-                      ${todayTempMax} / ${todayTempMin} &#8451;
+                      ${tempMaxList[0]} / ${tempMinList[0]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${todayWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[0]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${oneDayLaterDate} </h2>
-                      <img style="width:60px;" src=${oneDayLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[1]}>
                       <h2 class="daily-temp">
-                      ${oneDayLaterTempMax} / ${oneDayLaterTempMin} &#8451;
+                      ${tempMaxList[1]} / ${tempMinList[1]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${oneDayLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[1]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date"">${twoDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${twoDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[2]}>
                       <h2 class="daily-temp">
-                      ${twoDaysLaterTempMax} / ${twoDaysLaterTempMin} &#8451;
+                      ${tempMaxList[2]} / ${tempMinList[2]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${twoDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[2]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date"">${threeDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${threeDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[3]}>
                       <h2 class="daily-temp">
-                      ${threeDaysLaterTempMax} / ${threeDaysLaterTempMin} &#8451;
+                      ${tempMaxList[3]} / ${tempMinList[3]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${threeDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[3]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${fourDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${fourDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[4]}>
                       <h2 class="daily-temp">
-                      ${fourDaysLaterTempMax} / ${fourDaysLaterTempMin} &#8451;
+                      ${tempMaxList[4]} / ${tempMinList[4]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${fourDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[4]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${fiveDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${fiveDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[5]}>
                       <h2 class="daily-temp">
-                      ${fiveDaysLaterTempMax} / ${fiveDaysLaterTempMin} &#8451;
+                      ${tempMaxList[5]} / ${tempMinList[5]} &#8451;
                       </h2>
-                      <h2 class="daily-description">${fiveDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description">${tempDescriptionList[5]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${sixDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${sixDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[6]}>
                       <h2 class="daily-temp">
-                      ${sixDaysLaterTempMax} / ${sixDaysLaterTempMin} &#8451;
+                      ${tempMaxList[6]} / ${tempMinList[6]} &#8451;
                       </h2>
-                      <h2 class="daily-description"">${sixDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${tempDescriptionList[6]}</h2>
                     </div>
                     <div class="daily-element-center">
                       <h2 class="date">${sevenDaysLaterDate}</h2>
-                      <img style="width:60px;" src=${sevenDaysLaterWeatherImageURL}>
+                      <img style="width:60px;" src=${imageUrlList[7]}>
                       <h2 class="daily-temp">
-                      ${sevenDaysLaterTempMax} / ${sevenDaysLaterTempMin} &#8451;
+                      ${tempMaxList[7]} / ${tempMinList[7]} &#8451;
                       </h2>
-                      <h2 class="daily-description"">${sevenDaysLaterWeatherDescription}</h2>
+                      <h2 class="daily-description"">${tempDescriptionList[7]}</h2>
                     </div>
                   </div>
                 <hr class="border">
