@@ -117,29 +117,13 @@ app.post("/", (req, res) => {
             let iconList = [];
             let imageUrlList = [];
 
-            for (let i = 0; i < 8; i++) {
-              tempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
-              tempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
-              tempDescriptionList.push(
-                weatherData.daily[i].weather[0].description
-              );
-              iconList.push(weatherData.daily[i].weather[0].icon);
-              imageUrlList.push(
-                `http://openweathermap.org/img/wn/${weatherData.daily[i].weather[0].icon}@2x.png`
-              );
-            }
-
-            // get real days(including all information such as time)
-
             let datesList = [];
+            let monthsList = [];
+            let daysList = [];
+            let refinedDatesList = [];
 
-            for (let i = 0; i < 8; i++) {
-              datesList.push(
-                new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * i)
-              );
-            }
+            let dailyElementList = [];
 
-            // get week of days
             const weekday = new Array(8);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
@@ -150,28 +134,36 @@ app.post("/", (req, res) => {
             weekday[6] = "(Sat)";
             weekday[7] = "(Sun)";
 
-            // get week of day list
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 8; i++) {
+              tempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
+              tempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
+              tempDescriptionList.push(
+                weatherData.daily[i].weather[0].description
+              );
+              iconList.push(weatherData.daily[i].weather[0].icon);
+              imageUrlList.push(
+                `http://openweathermap.org/img/wn/${weatherData.daily[i].weather[0].icon}@2x.png`
+              );
+              datesList.push(
+                new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * i)
+              );
               weekday[datesList[0].getDay() + i];
-            }
-
-            // get month list
-            let monthsList = [];
-            for (let i = 0; i < 8; i++) {
               monthsList.push(datesList[i].getMonth() + 1);
-            }
-
-            //get day list
-            let daysList = [];
-            for (let i = 0; i < 8; i++) {
               daysList.push(datesList[i].getDate());
-            }
-
-            // get refined date list
-            let refinedDatesList = [];
-            for (let i = 0; i < 8; i++) {
               refinedDatesList.push(
                 `${monthsList[i]}/${daysList[i]}${weekday[i]}`
+              );
+              dailyElementList.push(
+                `
+                    <div class="daily-element-center">
+                    <h2 class="date">${refinedDatesList[i]} </h2>
+                    <img style="width:60px;" src=${imageUrlList[i]}>
+                    <h2 class="daily-temp">
+                    ${tempMaxList[i]} / ${tempMinList[i]} &#8451;
+                    </h2>
+                    <h2 class="daily-description">${tempDescriptionList[i]}</h2>
+                    </div>
+                  `
               );
             }
 
@@ -185,25 +177,9 @@ app.post("/", (req, res) => {
               `
             );
 
-            let elementList = [];
-            for (let i = 0; i < 8; i++) {
-              elementList.push(
-                `
-                <div class="daily-element-center">
-                <h2 class="date">${refinedDatesList[i]} </h2>
-                <img style="width:60px;" src=${imageUrlList[i]}>
-                <h2 class="daily-temp">
-                ${tempMaxList[i]} / ${tempMinList[i]} &#8451;
-                </h2>
-                <h2 class="daily-description">${tempDescriptionList[i]}</h2>
-                </div>
-              `
-              );
-            }
-
             res.write(
               `
-                ${elementList}
+                ${dailyElementList}
               `
             );
 
