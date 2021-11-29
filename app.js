@@ -129,16 +129,14 @@ app.post("/", (req, res) => {
               );
             }
 
-            // get real days
-
-            let daysList = [];
+            // get real days(including all information such as time)
+            let datesList = [];
 
             for (let i = 0; i < 8; i++) {
-              daysList.push(
+              datesList.push(
                 new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * i)
               );
             }
-            console.log(daysList);
 
             // get week of days
             const weekday = new Array(8);
@@ -151,41 +149,30 @@ app.post("/", (req, res) => {
             weekday[6] = "(Sat)";
             weekday[7] = "(Sun)";
 
-            const dayOne = weekday[daysList[0].getDay()];
-            const dayTwo = weekday[daysList[0].getDay() + 1];
-            const dayThree = weekday[daysList[0].getDay() + 2];
-            const dayFour = weekday[daysList[0].getDay() + 3];
-            const dayFive = weekday[daysList[0].getDay() + 4];
-            const daySix = weekday[daysList[0].getDay() + 5];
-            const daySeven = weekday[daysList[0].getDay() + 6];
+            // get week of day list
+            for (let i = 0; i < 7; i++) {
+              weekday[datesList[0].getDay() + i];
+            }
 
-            const monthByToday = daysList[0].getMonth() + 1;
-            const monthByOneDayLater = daysList[1].getMonth() + 1;
-            const monthByTwoDaysLater = daysList[2].getMonth() + 1;
-            const monthByThreeDaysLater = daysList[3].getMonth() + 1;
-            const monthByFourDaysLater = daysList[4].getMonth() + 1;
-            const monthByFiveDaysLater = daysList[5].getMonth() + 1;
-            const monthBySixDaysLater = daysList[6].getMonth() + 1;
-            const monthBySevenDaysLater = daysList[7].getMonth() + 1;
+            // get month list
+            let monthsList = [];
+            for (let i = 0; i < 8; i++) {
+              monthsList.push(datesList[i].getMonth() + 1);
+            }
 
-            const day = daysList[0].getDate();
-            const oneDayLater = daysList[1].getDate();
-            const twoDaysLater = daysList[2].getDate();
-            console.log(twoDaysLater);
-            const threeDaysLater = daysList[3].getDate();
-            const fourDaysLater = daysList[4].getDate();
-            const fiveDaysLater = daysList[5].getDate();
-            const sixDaysLater = daysList[6].getDate();
-            const sevenDaysLater = daysList[7].getDate();
+            //get day list
+            let daysList = [];
+            for (let i = 0; i < 8; i++) {
+              daysList.push(datesList[i].getDate());
+            }
 
-            const date = `${monthByToday}/${day}${dayOne}`;
-            const oneDayLaterDate = `${monthByOneDayLater}/${oneDayLater}${dayTwo}`;
-            const twoDaysLaterDate = `${monthByTwoDaysLater}/${twoDaysLater}${dayThree}`;
-            const threeDaysLaterDate = `${monthByThreeDaysLater}/${threeDaysLater}${dayFour}`;
-            const fourDaysLaterDate = `${monthByFourDaysLater}/${fourDaysLater}${dayFive}`;
-            const fiveDaysLaterDate = `${monthByFiveDaysLater}/${fiveDaysLater}${daySix}`;
-            const sixDaysLaterDate = `${monthBySixDaysLater}/${sixDaysLater}${daySeven}`;
-            const sevenDaysLaterDate = `${monthBySevenDaysLater}/${sevenDaysLater}${dayOne}`;
+            // get refined date list
+            let refinedDatesList = [];
+            for (let i = 0; i < 8; i++) {
+              refinedDatesList.push(
+                `${monthsList[i]}/${daysList[i]}${weekday[i]}`
+              );
+            }
 
             res.write(
               `
@@ -195,7 +182,7 @@ app.post("/", (req, res) => {
                   <hr class="border">
                   <div>
                     <div class="daily-element-center">
-                      <h2 class="date">${date} </h2>
+                      <h2 class="date">${refinedDatesList[0]} </h2>
                       <img style="width:60px;" src=${imageUrlList[0]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[0]} / ${tempMinList[0]} &#8451;
@@ -203,7 +190,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[0]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date">${oneDayLaterDate} </h2>
+                      <h2 class="date">${refinedDatesList[1]} </h2>
                       <img style="width:60px;" src=${imageUrlList[1]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[1]} / ${tempMinList[1]} &#8451;
@@ -211,7 +198,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[1]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date"">${twoDaysLaterDate}</h2>
+                      <h2 class="date"">${refinedDatesList[2]}</h2>
                       <img style="width:60px;" src=${imageUrlList[2]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[2]} / ${tempMinList[2]} &#8451;
@@ -219,7 +206,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[2]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date"">${threeDaysLaterDate}</h2>
+                      <h2 class="date"">${refinedDatesList[3]}</h2>
                       <img style="width:60px;" src=${imageUrlList[3]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[3]} / ${tempMinList[3]} &#8451;
@@ -227,7 +214,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[3]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date">${fourDaysLaterDate}</h2>
+                      <h2 class="date">${refinedDatesList[4]}</h2>
                       <img style="width:60px;" src=${imageUrlList[4]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[4]} / ${tempMinList[4]} &#8451;
@@ -235,7 +222,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[4]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date">${fiveDaysLaterDate}</h2>
+                      <h2 class="date">${refinedDatesList[5]}</h2>
                       <img style="width:60px;" src=${imageUrlList[5]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[5]} / ${tempMinList[5]} &#8451;
@@ -243,7 +230,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description">${tempDescriptionList[5]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date">${sixDaysLaterDate}</h2>
+                      <h2 class="date">${refinedDatesList[6]}</h2>
                       <img style="width:60px;" src=${imageUrlList[6]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[6]} / ${tempMinList[6]} &#8451;
@@ -251,7 +238,7 @@ app.post("/", (req, res) => {
                       <h2 class="daily-description"">${tempDescriptionList[6]}</h2>
                     </div>
                     <div class="daily-element-center">
-                      <h2 class="date">${sevenDaysLaterDate}</h2>
+                      <h2 class="date">${refinedDatesList[7]}</h2>
                       <img style="width:60px;" src=${imageUrlList[7]}>
                       <h2 class="daily-temp">
                       ${tempMaxList[7]} / ${tempMinList[7]} &#8451;
@@ -433,7 +420,7 @@ app.post("/", (req, res) => {
             const twentyFourHoursLaterImageURL = `http://openweathermap.org/img/wn/${twentyFourHoursLaterWeatherIcon}@2x.png`;
 
             // get am/pm time
-            let hours = daysList[0].getHours();
+            let hours = datesList[0].getHours();
             const ampm = hours >= 12 ? "pm" : "am";
             hours = hours % 12;
             hours = hours ? hours : 12;
