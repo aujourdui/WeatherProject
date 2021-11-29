@@ -130,6 +130,7 @@ app.post("/", (req, res) => {
             }
 
             // get real days(including all information such as time)
+
             let datesList = [];
 
             for (let i = 0; i < 8; i++) {
@@ -176,85 +177,48 @@ app.post("/", (req, res) => {
 
             res.write(
               `
-                  <h1 class="title-red" style="margin: 4rem 0 0 0">
-                    Daily
-                  </h1>
-                  <hr class="border">
-                  <div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[0]} </h2>
-                      <img style="width:60px;" src=${imageUrlList[0]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[0]} / ${tempMinList[0]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[0]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[1]} </h2>
-                      <img style="width:60px;" src=${imageUrlList[1]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[1]} / ${tempMinList[1]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[1]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date"">${refinedDatesList[2]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[2]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[2]} / ${tempMinList[2]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[2]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date"">${refinedDatesList[3]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[3]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[3]} / ${tempMinList[3]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[3]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[4]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[4]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[4]} / ${tempMinList[4]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[4]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[5]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[5]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[5]} / ${tempMinList[5]} &#8451;
-                      </h2>
-                      <h2 class="daily-description">${tempDescriptionList[5]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[6]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[6]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[6]} / ${tempMinList[6]} &#8451;
-                      </h2>
-                      <h2 class="daily-description"">${tempDescriptionList[6]}</h2>
-                    </div>
-                    <div class="daily-element-center">
-                      <h2 class="date">${refinedDatesList[7]}</h2>
-                      <img style="width:60px;" src=${imageUrlList[7]}>
-                      <h2 class="daily-temp">
-                      ${tempMaxList[7]} / ${tempMinList[7]} &#8451;
-                      </h2>
-                      <h2 class="daily-description"">${tempDescriptionList[7]}</h2>
-                    </div>
-                  </div>
+                <h1 class="title-red" style="margin: 4rem 0 0 0">
+                  Daily
+                </h1>
                 <hr class="border">
-                </div>
+                <div>
+              `
+            );
+
+            let elementList = [];
+            for (let i = 0; i < 8; i++) {
+              elementList.push(
                 `
+                <div class="daily-element-center">
+                <h2 class="date">${refinedDatesList[i]} </h2>
+                <img style="width:60px;" src=${imageUrlList[i]}>
+                <h2 class="daily-temp">
+                ${tempMaxList[i]} / ${tempMinList[i]} &#8451;
+                </h2>
+                <h2 class="daily-description">${tempDescriptionList[i]}</h2>
+                </div>
+              `
+              );
+            }
+
+            res.write(
+              `
+                ${elementList}
+              `
             );
 
             res.write(
-              `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
+              `
+                </div>
+                <hr class="border">
+                </div>
+              `
+            );
+            res.write(
+              `
+                <form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
                   <button type="submit"; name="button" class="home">Home</button>
-                  </form>`
+                </form>`
             );
 
             // hourly weather
