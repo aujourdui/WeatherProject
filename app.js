@@ -81,7 +81,7 @@ app.post("/", (req, res) => {
           `
             <a id="current-link">
             </a>
-            <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
+            <div id="city-background" style="background-image: url(https://source.unsplash.com/1000x1000/?${changeCityName};">
             </div>
           `
         );
