@@ -1,20 +1,15 @@
-#city-name {
-  font-size: 3rem;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin-top: 3rem;
-  color: #0c2d48;
+/* common */
+* {
+  overflow-x: hidden;
 }
 
-#city-background {
-  width: 80%;
-  height: 200px;
-  margin-top: 30px;
-  border-radius: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+body {
+  margin: 0;
 }
+
+/* #text {
+  display: none;
+} */
 
 .title-red {
   font-family: Arial, Helvetica, sans-serif;
@@ -55,6 +50,26 @@
   cursor: pointer;
 }
 
+/* title */
+#city-name {
+  font-size: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 3rem;
+  color: #0c2d48;
+}
+
+#city-background {
+  width: 80%;
+  height: 200px;
+  margin-top: 30px;
+  border-radius: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* daily weather */
 .date {
   color: blue;
   font-family: Arial, Helvetica, sans-serif;
@@ -81,12 +96,13 @@
   width: 100%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 45rem) {
   .daily-element-center {
     margin-left: 32%;
   }
 }
 
+/* hourly weather */
 .hour {
   color: blue;
   font-family: Arial, Helvetica, sans-serif;
