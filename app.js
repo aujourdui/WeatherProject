@@ -81,7 +81,7 @@ app.post("/", (req, res) => {
           `
             <a id="current-link">
             </a>
-            <div id="city-background" style="background-image: url(https://source.unsplash.com/1000x1000/?${changeCityName};">
+            <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
             </div>
           `
         );
@@ -157,9 +157,10 @@ app.post("/", (req, res) => {
             let datesList = [];
             let monthsList = [];
             let daysList = [];
+            let weekdayList = [];
             let refinedDatesList = [];
 
-            const weekday = new Array(8);
+            const weekday = new Array(13);
             weekday[0] = "(Sun)";
             weekday[1] = "(Mon)";
             weekday[2] = "(Tue)";
@@ -168,9 +169,15 @@ app.post("/", (req, res) => {
             weekday[5] = "(Fri)";
             weekday[6] = "(Sat)";
             weekday[7] = "(Sun)";
+            weekday[8] = "(Mon)";
+            weekday[9] = "(Tue)";
+            weekday[10] = "(Wed)";
+            weekday[11] = "(Thu)";
+            weekday[12] = "(Fri)";
+            weekday[13] = "(Sat)";
 
             // create whole daily data list
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 7; i++) {
               dailyTempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
               dailyTempMaxList.push(weatherData.daily[i].temp.max.toFixed(1));
               dailyTempDescriptionList.push(
@@ -184,11 +191,11 @@ app.post("/", (req, res) => {
               datesList.push(
                 new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * i)
               );
-              weekday[datesList[0].getDay() + i];
+              weekdayList.push(weekday[datesList[0].getDay() + i]);
               monthsList.push(datesList[i].getMonth() + 1);
               daysList.push(datesList[i].getDate());
               refinedDatesList.push(
-                `${monthsList[i]}/${daysList[i]}${weekday[i]}`
+                `${monthsList[i]}/${daysList[i]}${weekdayList[i]}`
               );
             }
 
@@ -202,7 +209,7 @@ app.post("/", (req, res) => {
               `
             );
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 7; i++) {
               res.write(
                 `
                   <div class="daily-element-center">
