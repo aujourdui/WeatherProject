@@ -43,60 +43,65 @@ app.post("/", (req, res) => {
 
         res.write(
           `
-          <head>
-            <title>Weather App</title>
-            <link rel="stylesheet" href="css/weather.css" />
-            <link rel="icon" type="image/jpg" href="/images/w_logo.jpg" />
-          </head>`
-        );
-
-        res.write(
-          `
-          <h1 id="city-name">${cityName} / ${country}
-          <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
-          <div>
-          </h1>
-          `
-        );
-        res.write(
-          `
-          <h1 class="title-red" style="margin-bottom:0;">
-            Current
-          </h1>
-          <div>
-          <hr class="border">
-            <h1 class="title-blue" style="margin-bottom:0;">
-              ${weatherDescription}
-            </h1>
-            <img class="img-current" src=${imageURL}>
-            <h1 class="temp" style="margin-top:0;">
-              ${temp} &#8451;
-            </h1>
-          </div>`
-        );
-
-        res.write(
-          `
-          <h1 class="title-red" style="margin: 3rem 0 0 0;">
-            Temperature detail
-          </h1>
-          <div>
-            <hr class="border">
-            <h1 class="title-blue" style="margin-bottom:0;">
-              Max: ${maxTemp} &#8451;
-            </h1>
-            <h1 class="title-red" style="margin-top:0;">
-              Min: ${minTemp} &#8451;
-            </h1>
-            <hr class="border" style="margin-bottom: 2rem">
-          </div>
+            <head>
+              <title>Weather App</title>
+              <link rel="stylesheet" href="css/weather.css" />
+              <link rel="icon" type="image/jpg" href="/images/w_logo.jpg" />
+            </head>
           `
         );
 
         res.write(
-          `<form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
-             <button type="submit"; name="button" class="home">Home</button>
-           </form>
+          `
+            <h1 id="city-name">${cityName} / ${country}
+              <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
+              </div>
+            </h1>
+          `
+        );
+        res.write(
+          `
+            <h1 class="title-red" style="margin-bottom:0;">
+              Current
+            </h1>
+            <div>
+              <hr class="border">
+              <h1 class="title-blue" style="margin-bottom:0;">
+                ${weatherDescription}
+              </h1>
+              <img class="img-current" src=${imageURL}>
+              <h1 class="temp" style="margin-top:0;">
+                ${temp} &#8451;
+              </h1>
+            </div>
+          `
+        );
+
+        res.write(
+          `
+            <h1 class="title-red" style="margin: 3rem 0 0 0;">
+              Temperature detail
+            </h1>
+            <div>
+              <hr class="border">
+              <h1 class="title-blue" style="margin-bottom:0;">
+                Max: ${maxTemp} &#8451;
+              </h1>
+              <h1 class="title-red" style="margin-top:0;">
+                Min: ${minTemp} &#8451;
+              </h1>
+              <hr class="border" style="margin-bottom: 2rem">
+            </div>
+          `
+        );
+
+        res.write(
+          `
+            <form onSubmit="{e => e.preventDefault}" style="text-align: center;">
+              <button type="submit"; name="button" class="home">
+                Home
+              </button>
+            </form>
           `
         );
 
@@ -135,9 +140,6 @@ app.post("/", (req, res) => {
             weekday[6] = "(Sat)";
             weekday[7] = "(Sun)";
 
-            // display element
-            let dailyElementList = [];
-
             // create whole daily data list
             for (let i = 0; i < 8; i++) {
               dailyTempMinList.push(weatherData.daily[i].temp.min.toFixed(1));
@@ -159,19 +161,6 @@ app.post("/", (req, res) => {
               refinedDatesList.push(
                 `${monthsList[i]}/${daysList[i]}${weekday[i]}`
               );
-
-              dailyElementList.push(
-                `
-                  <div class="daily-element-center">
-                    <h2 class="date">${refinedDatesList[i]} </h2>
-                    <img style="width:60px;" src=${dailyImageUrlList[i]}>
-                    <h2 class="daily-temp">
-                      ${dailyTempMaxList[i]} / ${dailyTempMinList[i]} &#8451
-                    </h2>
-                    <h2 class="daily-description">${dailyTempDescriptionList[i]}</h2>
-                  </div>
-                `
-              );
             }
 
             // display daily data lists
@@ -187,8 +176,19 @@ app.post("/", (req, res) => {
             for (let i = 0; i < 8; i++) {
               res.write(
                 `
-                ${dailyElementList[i]}
-              `
+                  <div class="daily-element-center">
+                    <h2 class="date">
+                      ${refinedDatesList[i]}
+                    </h2>
+                    <img style="width:60px;" src=${dailyImageUrlList[i]}>
+                    <h2 class="daily-temp">
+                      ${dailyTempMaxList[i]} / ${dailyTempMinList[i]} &#8451
+                    </h2>
+                    <h2 class="daily-description">
+                      ${dailyTempDescriptionList[i]}
+                    </h2>
+                  </div>
+                `
               );
             }
 
@@ -199,8 +199,10 @@ app.post("/", (req, res) => {
             );
             res.write(
               `
-                <form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;">
-                  <button type="submit"; name="button" class="home">Home</button>
+                <form onSubmit="{e => e.preventDefault}" style="text-align: center;">
+                  <button type="submit"; name="button" class="home">
+                    Home
+                  </button>
                 </form>
               `
             );
@@ -221,9 +223,6 @@ app.post("/", (req, res) => {
             // display am/pm time
             let refinedHourList = [];
 
-            // display repetitive element
-            let hourlyElementList = [];
-
             // create whole hourly data list
             for (let i = 0; i < 24; i++) {
               hourlyTempList.push(weatherData.hourly[i].temp.toFixed(1));
@@ -243,17 +242,6 @@ app.post("/", (req, res) => {
               ampmHourList.push(hours);
 
               refinedHourList.push(`${ampmHourList[i]}:00${ampmList[i]}`);
-
-              hourlyElementList.push(`
-                <div class="hourly-element-center">
-                  <h3 class="hour">${refinedHourList[i]} </h3>
-                  <img style="width:40px;" src=${hourlyImageUrlList[i]}>
-                  <h3 class="hourly-temp">
-                  ${hourlyTempList[i]} &#8451;
-                  </h3>
-                  <h3 class="hourly-description">${hourlyDescriptionList[i]}</h3>
-                </div>
-            `);
             }
 
             // display 24hours(optional)
@@ -274,19 +262,32 @@ app.post("/", (req, res) => {
             for (let i = 0; i < 24; i++) {
               res.write(
                 `
-                ${hourlyElementList[i]}
-              `
+                  <div class="hourly-element-center">
+                      <h3 class="hour">
+                        ${refinedHourList[i]}
+                      </h3>
+                      <img style="width:40px;" src=${hourlyImageUrlList[i]}>
+                      <h3 class="hourly-temp">
+                        ${hourlyTempList[i]} &#8451;
+                      </h3>
+                      <h3 class="hourly-description">
+                        ${hourlyDescriptionList[i]}
+                      </h3>
+                  </div>
+                `
               );
             }
             res.write(
               `
-                <hr style="border: 1px dotted gray;width:600px;margin-bottom: 2rem;">
+                <hr class="border" style="margin-bottom: 2rem;">
               `
             );
             res.write(
               `
-                <form onSubmit="{e => e.preventDefault}" onmouseover="" style="text-align: center;margin-bottom: 0 0 3rem 0">
-                  <button class="home" type="submit"; name="button">Home</button>
+                <form onSubmit="{e => e.preventDefault}" style="text-align: center;margin-bottom: 0 0 3rem 0">
+                  <button class="home" type="submit"; name="button">
+                    Home
+                  </button>
                 </form>
               `
             );
