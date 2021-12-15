@@ -1,4 +1,4 @@
-import apiKey from "./public/js/config.js";
+import API_KEY from "./public/js/config.js";
 import express from "express";
 import alert from "alert";
 import https from "https";
@@ -23,7 +23,7 @@ app.post("/", (req, res) => {
   };
   const query = capitalizeFirstLetter(originalQuery);
   const unit = "metric";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}&units=${unit}`;
 
   // current weather
   https.get(url, (response) => {
