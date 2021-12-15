@@ -53,23 +53,31 @@ app.post("/", (req, res) => {
 
         res.write(
           `
-            <div>
-              <div id="header">
-                <h1 id="city-name">
-                ${cityName} / ${country}
-                </h1>
-                <a href="#daily-link">
-                  daily
-                </a>
-                <a href="#hourly-link">
-                  hourly
-                </a>
-              </div>
-              <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
-              </div>
+            <div id="header">
+              <h1 id="city-name">
+              ${cityName} / ${country}
+              </h1>
+              <a href="#current-link">
+                current
+              </a>
+              <a href="#daily-link">
+                daily
+              </a>
+              <a href="#hourly-link">
+                hourly
+              </a>
             </div>
           `
         );
+        res.write(
+          `
+            <a id="current-link">
+            </a>
+            <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
+            </div>
+          `
+        );
+
         res.write(
           `
             <h1 class="title-red" style="margin-bottom:0;">
@@ -108,6 +116,8 @@ app.post("/", (req, res) => {
 
         res.write(
           `
+            <a id="daily-link">
+            </a>
             <form onSubmit="{e => e.preventDefault}" style="text-align: center;">
               <button type="submit"; name="button" class="home">
                 Home
@@ -177,8 +187,6 @@ app.post("/", (req, res) => {
             // display daily data lists
             res.write(
               `
-                <a id="daily-link">
-                </a>
                 <h1 class="title-red" style="margin: 4rem 0 0 0">
                   Daily
                 </h1>
@@ -212,6 +220,8 @@ app.post("/", (req, res) => {
             );
             res.write(
               `
+                <a id="hourly-link">
+                </a>
                 <form onSubmit="{e => e.preventDefault}" style="text-align: center;">
                   <button type="submit"; name="button" class="home">
                     Home
@@ -266,8 +276,6 @@ app.post("/", (req, res) => {
             // display hourly data
             res.write(
               `
-                <a id="hourly-link">
-                </a>
                 <h1 class="title-red" style="margin: 4rem 0 0 0;">
                   Hourly
                 </h1>
