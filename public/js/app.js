@@ -1,4 +1,4 @@
-import API_KEY from "./public/js/config.js";
+import API_KEY from "./config.js";
 import express from "express";
 import alert from "alert";
 import https from "https";
