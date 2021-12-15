@@ -1,7 +1,6 @@
-/* common */
+/* common  */
 body {
   margin: 0;
-  overflow-x: hidden;
   background-color: #fff5fd;
 }
 
@@ -51,13 +50,11 @@ body {
   line-height: 4rem;
   display: flex;
   justify-content: center;
-  /* text-align: center; */
   background-color: #bf1363;
 }
 
 #header-link__wrapper {
   display: flex;
-  float: right;
 }
 
 .header-link__container {
@@ -78,7 +75,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   color: white;
-  /* color: #0c2d48; */
 }
 
 #city-background {
@@ -114,14 +110,7 @@ body {
 
 .daily-element-center {
   display: flex;
-  margin-left: 5%;
-  width: 100%;
-}
-
-@media (min-width: 45rem) {
-  .daily-element-center {
-    margin-left: 32%;
-  }
+  justify-content: center;
 }
 
 /* hourly weather */
@@ -147,12 +136,5 @@ body {
 
 .hourly-element-center {
   display: flex;
-  margin-left: 20%;
-  width: 100%;
-}
-
-@media (min-width: 800px) {
-  .hourly-element-center {
-    margin-left: 40%;
-  }
+  justify-content: center;
 }
