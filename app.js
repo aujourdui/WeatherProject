@@ -57,15 +57,23 @@ app.post("/", (req, res) => {
               <h1 id="city-name">
               ${cityName} / ${country}
               </h1>
-              <a href="#current-link">
-                current
-              </a>
-              <a href="#daily-link">
-                daily
-              </a>
-              <a href="#hourly-link">
-                hourly
-              </a>
+              <div id="header-link__wrapper">
+                <div class="header-link__container" id="header-link-container__left">
+                  <a href="#current-link"  class="header-link">
+                    current
+                  </a>
+                </div>
+                <div class="header-link__container">
+                  <a href="#daily-link" class="header-link">
+                    daily
+                  </a>
+                </div>
+                <div class="header-link__container">
+                  <a href="#hourly-link" class="header-link">
+                    hourly
+                  </a>
+                </div>
+              </div>
             </div>
           `
         );
