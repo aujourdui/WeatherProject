@@ -5,6 +5,11 @@ import https from "https";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
 const API_KEY = "6ead27bdb26041ed3ea800802ff72381";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -345,6 +350,6 @@ app.post("/", (req, res) => {
   });
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
   console.log("Server is running on port 3000");
 });
