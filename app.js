@@ -81,7 +81,7 @@ app.post("/", (req, res) => {
             Temperature detail
           </h1>
           <div>
-          <hr class="border"">
+          <hr class="border">
             <h1 class="title-blue" style="margin-bottom:0;">
               Max: ${maxTemp} &#8451;
             </h1>
