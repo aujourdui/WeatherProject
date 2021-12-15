@@ -2,6 +2,7 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  background-color: #fff5fd;
 }
 
 .title-red {
@@ -47,17 +48,37 @@ body {
 #header {
   position: sticky;
   top: 0;
-  line-height: 6rem;
+  line-height: 4rem;
   display: flex;
   justify-content: center;
-  background-color: darkgray;
+  /* text-align: center; */
+  background-color: #bf1363;
+}
+
+#header-link__wrapper {
+  display: flex;
+  float: right;
+}
+
+.header-link__container {
+  margin: 0 5%;
+}
+
+#header-link-container__left {
+  margin-left: 15%;
+}
+
+.header-link {
+  color: lemonchiffon;
+  text-decoration: none;
 }
 
 #city-name {
   font-size: 3rem;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  color: #0c2d48;
+  color: white;
+  /* color: #0c2d48; */
 }
 
 #city-background {
