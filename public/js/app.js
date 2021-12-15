@@ -1,9 +1,11 @@
-import API_KEY from "./config.js";
+// import API_KEY from "./config.js";
 import express from "express";
 import alert from "alert";
 import https from "https";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
+const API_KEY = "6ead27bdb26041ed3ea800802ff72381";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
