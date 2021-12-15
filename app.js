@@ -1,9 +1,16 @@
-import API_KEY from "./config.js";
+// import API_KEY from "./config.js";
 import express from "express";
 import alert from "alert";
 import https from "https";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+const API_KEY = "6ead27bdb26041ed3ea800802ff72381";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -13,7 +20,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.post("/", (req, res) => {
@@ -343,6 +350,6 @@ app.post("/", (req, res) => {
   });
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
   console.log("Server is running on port 3000");
 });
