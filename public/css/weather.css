@@ -7,10 +7,6 @@ body {
   margin: 0;
 }
 
-/* #text {
-  display: none;
-} */
-
 .title-red {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
@@ -50,12 +46,18 @@ body {
   cursor: pointer;
 }
 
-/* title */
+/* header & title */
+#header {
+  line-height: 6rem;
+  display: flex;
+  justify-content: center;
+  background-color: darkgray;
+}
+
 #city-name {
   font-size: 3rem;
   font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin-top: 3rem;
+  margin: 0;
   color: #0c2d48;
 }
 

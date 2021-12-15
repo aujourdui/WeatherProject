@@ -53,10 +53,21 @@ app.post("/", (req, res) => {
 
         res.write(
           `
-            <h1 id="city-name">${cityName} / ${country}
+            <div>
+              <div id="header">
+                <h1 id="city-name">
+                ${cityName} / ${country}
+                </h1>
+                <a href="#daily-link">
+                  daily
+                </a>
+                <a href="#hourly-link">
+                  hourly
+                </a>
+              </div>
               <div id="city-background" style="background-image: url(https://source.unsplash.com/1200x200/?${changeCityName};">
               </div>
-            </h1>
+            </div>
           `
         );
         res.write(
@@ -79,7 +90,7 @@ app.post("/", (req, res) => {
 
         res.write(
           `
-            <h1 class="title-red" style="margin: 3rem 0 0 0;">
+            <h1 class="title-red" style="margin: 1rem 0 0 0;">
               Temperature detail
             </h1>
             <div>
@@ -166,6 +177,8 @@ app.post("/", (req, res) => {
             // display daily data lists
             res.write(
               `
+                <a id="daily-link">
+                </a>
                 <h1 class="title-red" style="margin: 4rem 0 0 0">
                   Daily
                 </h1>
@@ -253,6 +266,8 @@ app.post("/", (req, res) => {
             // display hourly data
             res.write(
               `
+                <a id="hourly-link">
+                </a>
                 <h1 class="title-red" style="margin: 4rem 0 0 0;">
                   Hourly
                 </h1>
