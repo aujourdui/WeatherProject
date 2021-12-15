@@ -1,10 +1,7 @@
 /* common */
-* {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 .title-red {
@@ -48,6 +45,8 @@ body {
 
 /* header & title */
 #header {
+  position: sticky;
+  top: 0;
   line-height: 6rem;
   display: flex;
   justify-content: center;
