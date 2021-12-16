@@ -3,13 +3,17 @@ import alert from "alert";
 import https from "https";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
-let port = process.env.PORT;
+dotenv.config();
+const env = process.env;
+
+let port = env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
 
-const API_KEY = "6ead27bdb26041ed3ea800802ff72381";
+const API_KEY = env.API_KEY;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
