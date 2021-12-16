@@ -1,4 +1,5 @@
 /* common  */
+
 body {
   margin: 0;
   background-color: #fff5fd;
@@ -36,6 +37,7 @@ body {
 
 .home {
   font-size: 1rem;
+  color: black;
   background-color: #ecf87f;
   text-decoration: none;
   padding: 10px 32px;
@@ -68,6 +70,7 @@ body {
 .header-link {
   color: lemonchiffon;
   text-decoration: none;
+  font-size: 1.5rem;
 }
 
 #city-name {
