@@ -13,7 +13,7 @@ if (port == null || port == "") {
   port = 3000;
 }
 
-const API_KEY = env.API_KEY;
+const apiKey = env.API_KEY;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -33,7 +33,7 @@ app.post("/", (req, res) => {
   };
   const query = capitalizeFirstLetter(originalQuery);
   const unit = "metric";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}&units=${unit}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=${unit}`;
 
   // current weather
   https.get(url, (response) => {
