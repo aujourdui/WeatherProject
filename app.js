@@ -1,4 +1,3 @@
-// import API_KEY from "./config.js";
 import express from "express";
 import alert from "alert";
 import https from "https";
@@ -350,6 +349,6 @@ app.post("/", (req, res) => {
   });
 });
 
-app.listen(port, function () {
+app.listen(3000, function () {
   console.log("Server is running on port 3000");
 });
