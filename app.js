@@ -284,7 +284,7 @@ app.post("/", (req, res) => {
 
               let hours = datesList[0].getHours() + i;
               hourList.push(hours);
-              ampmList.push(hours >= 12 ? "pm" : "am");
+              ampmList.push(hours >= 12 && hours <= 24 ? "pm" : "am");
               hours = hours % 12;
               hours = hours ? hours : 12;
               ampmHourList.push(hours);
