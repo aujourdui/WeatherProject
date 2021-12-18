@@ -264,7 +264,6 @@ app.post("/", (req, res) => {
             let hourlyImageUrlList = [];
 
             // get am/pm time
-            let hourList = [];
             let ampmList = [];
             let ampmHourList = [];
 
@@ -283,10 +282,11 @@ app.post("/", (req, res) => {
               );
 
               let hours = datesList[0].getHours() + i;
-              hourList.push(hours);
-              ampmList.push(hours >= 12 && hours <= 24 ? "pm" : "am");
+              hours = hours <= 24 ? hours : hours - 24;
+              ampmList.push(hours >= 12 ? "pm" : "am");
               hours = hours % 12;
               hours = hours ? hours : 12;
+              // console.log(hours);
               ampmHourList.push(hours);
 
               refinedHourList.push(`${ampmHourList[i]}:00${ampmList[i]}`);
