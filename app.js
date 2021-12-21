@@ -216,6 +216,8 @@ app.post("/", (req, res) => {
                   Daily
                 </h1>
                 <hr class="border">
+                <div class="daily-element__container">
+                <div class="daily-element__wrapper">
               `
             );
 
@@ -240,6 +242,8 @@ app.post("/", (req, res) => {
 
             res.write(
               `
+                </div>
+                </div>
                 <hr class="border">
               `
             );
@@ -286,7 +290,6 @@ app.post("/", (req, res) => {
               ampmList.push(hours >= 12 ? "pm" : "am");
               hours = hours % 12;
               hours = hours ? hours : 12;
-              // console.log(hours);
               ampmHourList.push(hours);
 
               refinedHourList.push(`${ampmHourList[i]}:00${ampmList[i]}`);
