@@ -217,32 +217,32 @@ app.post("/", (req, res) => {
                 </h1>
                 <hr class="border">
                 <div class="daily-element__container">
-                <div class="daily-element__wrapper">
+                  <div class="daily-element__wrapper">
               `
             );
 
             for (let i = 0; i < 7; i++) {
               res.write(
                 `
-                  <div class="daily-element-center">
-                    <h2 class="date">
-                      ${refinedDatesList[i]}
-                    </h2>
-                    <img style="width:60px;" src=${dailyImageUrlList[i]}>
-                    <h2 class="daily-temp">
-                      ${dailyTempMaxList[i]} / ${dailyTempMinList[i]} &#8451
-                    </h2>
-                    <h2 class="daily-description">
-                      ${dailyTempDescriptionList[i]}
-                    </h2>
-                  </div>
-                `
+                    <div class="daily-element-center">
+                      <h2 class="date">
+                        ${refinedDatesList[i]}
+                      </h2>
+                      <img style="width:60px;" src=${dailyImageUrlList[i]}>
+                      <h2 class="daily-temp">
+                        ${dailyTempMaxList[i]} / ${dailyTempMinList[i]} &#8451
+                      </h2>
+                      <h2 class="daily-description">
+                        ${dailyTempDescriptionList[i]}
+                      </h2>
+                    </div>
+                  `
               );
             }
 
             res.write(
               `
-                </div>
+                  </div>
                 </div>
                 <hr class="border">
               `
@@ -308,6 +308,8 @@ app.post("/", (req, res) => {
                   Hourly
                 </h1>
                 <hr class="border">
+                <div class="hourly-element__container">
+                  <div class="hourly-element__wrapper">
               `
             );
             for (let i = 0; i < 24; i++) {
@@ -330,8 +332,10 @@ app.post("/", (req, res) => {
             }
             res.write(
               `
-                <hr class="border" style="margin-bottom: 2rem;">
-              `
+                </div>
+              </div>
+              <hr class="border" style="margin-bottom: 2rem;">
+            `
             );
             res.write(
               `
