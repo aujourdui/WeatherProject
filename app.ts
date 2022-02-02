@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const env = process.env;
 
-let port = env.PORT;
+let port: string | number = env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
