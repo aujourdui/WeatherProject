@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./public/js",
     "allowJs": true,
     "target": "es5",
     "lib": ["esnext", "dom"],
