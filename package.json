@@ -6,8 +6,7 @@
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node public/js/app.js",
-    "tsc": "tsc --outDir public/js"
+    "start": "node --loader ts-node/esm ./app.ts"
   },
   "author": "",
   "license": "ISC",
